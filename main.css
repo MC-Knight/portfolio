@@ -66,8 +66,8 @@ body {
   flex-shrink: 0;
   background: var(--main-color);
   border-radius: 50%;
-  margin-top: 150px;
-  margin-left: 150px;
+  top: 25%;
+  margin-left: calc(100% - 250px);
 }
 
 .profile .inner-white {
@@ -430,5 +430,263 @@ body {
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: rgba(51, 56, 60, 0.85);
+  border: 1px solid rgba(51, 56, 60, 0.85);
 }
 /*-- end contactme div --*/
+
+/*-- start footer div --*/
+.footer {
+  width: 100%;
+  height: 10vh;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-left {
+  width: 30%;
+  height: 100%;
+  background: var(--main-color);
+}
+
+.footer-right {
+  width: 70%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--main-color);
+}
+/*-- end footer div --*/
+
+/* msg start */
+#msg {
+  color: var(--green-color);
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-top: 20px;
+}
+/* msg end */
+
+/* mediaqueries start */
+@media screen and (max-width: 896px) {
+  .container {
+    flex-direction: column;
+    position: relative;
+  }
+
+  .container-right {
+    width: 100%;
+    height: 30vh;
+    padding: 20px 30px;
+    align-items: flex-start;
+  }
+
+  .container-right svg {
+    display: block;
+    color: var(--white-color);
+  }
+
+  .profile {
+    width: 250px;
+    height: 250px;
+    top: 25%;
+    right: 50%;
+    transform: translateX(50%);
+    z-index: 300;
+  }
+
+  .profile .inner-white {
+    width: 200px;
+    height: 200px;
+  }
+
+  .profile .inner-white img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .container-left {
+    width: 100%;
+    height: 70vh;
+  }
+
+  .container-left nav {
+    position: absolute;
+    flex-direction: column;
+    /* background: var(--main-color); */
+    height: 100vh;
+    top: 0;
+    right: 0;
+    width: 200px;
+    padding: 30px;
+    justify-content: flex-start;
+    z-index: 5;
+    display: none;
+  }
+
+  .container-left nav a {
+    color: var(--white-color);
+  }
+
+  .container-left .profile-details {
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-left: 5%;
+    top: 20%;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: 0;
+    padding-bottom: 20px;
+  }
+
+  .container-left .profile-details .socials {
+    display: flex;
+    justify-content: flex-start;
+    gap: 30px;
+  }
+
+  .right-small {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    height: 10vh;
+  }
+
+  .right-small h1 span {
+    font-size: 20px;
+  }
+
+  .left-small {
+    width: 100%;
+    height: 90vh;
+  }
+  .footer-left {
+    display: none;
+  }
+
+  .footer-right {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 586px) {
+  .container-right h1 {
+    font-size: 20px;
+  }
+
+  .container-right h1 span {
+    font-size: 20px;
+  }
+
+  .container-left .profile-details {
+    width: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding-left: 5%;
+    top: 5%;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: 10%;
+    padding-bottom: 20px;
+  }
+
+  .profile {
+    width: 200px;
+    height: 200px;
+    top: 45%;
+    right: 50%;
+    transform: translateX(50%);
+    z-index: 300;
+  }
+
+  .profile .inner-white {
+    width: 150px;
+    height: 150px;
+  }
+
+  .profile .inner-white img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .container-left .profile-details h2 {
+    font-size: 25px;
+  }
+
+  .container-left .profile-details h3 {
+    font-size: 25px;
+  }
+  .container-left .profile p {
+    font-size: 15px;
+  }
+
+  .left-small {
+    width: 100%;
+    height: auto;
+    padding-bottom: 20px;
+  }
+
+  .aboutme-head h1 {
+    font-size: 20px;
+  }
+
+  .aboutme-head h1 span {
+    font-size: 20px;
+  }
+
+  .aboutme-details {
+    width: 100%;
+    padding: 10px 0 10px 8%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: flex-start;
+  }
+
+  .aboutme-hireme {
+    margin-top: 30px;
+  }
+
+  .skills {
+    gap: 10px;
+    margin-top: 50px;
+    padding-left: 8%;
+    margin-left: 0;
+  }
+
+  .skills-right {
+    padding-left: 8%;
+    margin-left: 0;
+  }
+
+  .form-upper {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .input-field {
+    width: 100%;
+  }
+
+  .footer-left {
+    display: none;
+  }
+
+  .footer-right {
+    width: 100%;
+  }
+
+  .btn {
+    width: 100%;
+  }
+}
