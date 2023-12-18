@@ -26,3 +26,19 @@ form.addEventListener("submit", (e) => {
     })
     .catch((error) => console.error("Error!", error.message));
 });
+
+//open and close menu in small screen
+const closeBtn = document.getElementById("close");
+const openBtn = document.getElementById("open");
+const menu = document.getElementById("small-screens");
+
+openBtn.addEventListener("click", openMenu);
+closeBtn.addEventListener("click", closeMenu);
+
+function openMenu() {
+  menu.style.right = "0";
+}
+
+function closeMenu() {
+  menu.style.right = "-200px";
+}
