@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog | title</title>
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../images/favicon-32x32.png"
+    />
+
+    <link rel="stylesheet" href="blog.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="blog-nav">
+        <a href="../index.html">
+          <h1><span>Joseph</span> BT</h1></a
+        >
+      </div>
+
+      <div class="blog-container">
+        <img src="../images/check.jpg" alt="" />
+
+        <p class="blog-main-title">Image Handling using Multer in REACT.</p>
+
+        <div class="blog-writter">
+          <img src="../images/profile.png" alt="" />
+          <div class="blog-writter-names">
+            <p>Byishimo Teto Joseph</p>
+            <p>Feb 10, 2023</p>
+          </div>
+        </div>
+
+        <div class="blog-main-likes">
+          <div>
+            <svg
+              width="20"
+              height="17"
+              viewBox="0 0 20 17"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M16.3 10.1667C17.641 8.95 19 7.49167 19 5.58333C19 4.36776 18.4785 3.20197 17.5502 2.34243C16.6219 1.48289 15.3628 1 14.05 1C12.466 1 11.35 1.41667 10 2.66667C8.65 1.41667 7.534 1 5.95 1C4.63718 1 3.37813 1.48289 2.44982 2.34243C1.52152 3.20197 1 4.36776 1 5.58333C1 7.5 2.35 8.95833 3.7 10.1667L10 16L16.3 10.1667Z"
+                stroke="black"
+                stroke-opacity="0.6"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            345
+          </div>
+          <div>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M2 12C2 12 5 5 12 5C19 5 22 12 22 12C22 12 19 19 12 19C5 19 2 12 2 12Z"
+                stroke="black"
+                stroke-opacity="0.6"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                stroke="black"
+                stroke-opacity="0.6"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            543
+          </div>
+
+          <div>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.9 20C9.80858 20.979 12.0041 21.2442 14.0909 20.7478C16.1777 20.2513 18.0186 19.0258 19.2818 17.2922C20.545 15.5585 21.1474 13.4307 20.9806 11.2921C20.8137 9.1536 19.8886 7.14496 18.3718 5.62818C16.855 4.1114 14.8464 3.18624 12.7078 3.0194C10.5693 2.85257 8.44147 3.45503 6.70782 4.71823C4.97417 5.98143 3.74869 7.8223 3.25222 9.9091C2.75575 11.9959 3.02094 14.1914 4 16.1L2 22L7.9 20Z"
+                stroke="black"
+                stroke-opacity="0.6"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+
+            34
+          </div>
+        </div>
+
+        <p class="blog-main-content">
+          In modern web development, handling image uploads is a common
+          requirement for various applications, from social media platforms to
+          e-commerce websites. In this blog post, we’ll explore how to use
+          Multer, a popular middleware for handling file uploads in Node.js
+          applications, to store images on the server and save their URLs in a
+          MongoDB database. We will also delve into the controller functions to
+          POST and GET images, explaining the concept of a Blob along the way.
+          Let’s get started!
+        </p>
+
+        <p class="blog-main-content">
+          Before you begin, make sure you have Node.js and MongoDB installed. If
+          not, you can download and install them from their official websites.
+        </p>
+
+        <p class="blog-main-content">
+          To store image URLs in MongoDB, you need to create a model
+        </p>
+
+        <p class="blog-main-content">
+          Multer ? : is a middleware for Express, a web application framework
+          for Node.js, that simplifies the process of handling file uploads. It
+          allows you to upload files, such as images, directly from a client to
+          the server, and then you can process and store these files as needed.
+          For uploading the image we need a middleware So make a Middleware
+          folder and make file “multerStorage.js”
+        </p>
+
+        <p class="blog-main-content">
+          Certainly, to complete the functionality for posting and getting
+          images in a web application, you’ll need both frontend and backend
+          components. Below, I’ll provide you with JavaScript functions for the
+          frontend that you can integrate into your client-side code, which
+          could be written using HTML, CSS, and a JavaScript framework like
+          React or vanilla JavaScript.
+        </p>
+
+        <p class="more-recommendations">More Recommendations</p>
+
+        <div class="more-blogs">
+          <div class="blog-content">
+            <img src="../images/check.jpg" alt="" />
+
+            <p class="blog-date">March. 15, 2023</p>
+            <p class="blog-title">Image Handling using React</p>
+            <p class="blog-text">
+              Far far away, behind the word mountains, far from the countries
+              Vokalia and Consonantia, there live the blind texts
+            </p>
+
+            <div class="blog-buttons">
+              <div class="blog-like">
+                <div>
+                  <svg
+                    width="20"
+                    height="17"
+                    viewBox="0 0 20 17"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M16.3 10.1667C17.641 8.95 19 7.49167 19 5.58333C19 4.36776 18.4785 3.20197 17.5502 2.34243C16.6219 1.48289 15.3628 1 14.05 1C12.466 1 11.35 1.41667 10 2.66667C8.65 1.41667 7.534 1 5.95 1C4.63718 1 3.37813 1.48289 2.44982 2.34243C1.52152 3.20197 1 4.36776 1 5.58333C1 7.5 2.35 8.95833 3.7 10.1667L10 16L16.3 10.1667Z"
+                      stroke="black"
+                      stroke-opacity="0.6"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  345
+                </div>
+                <div>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M2 12C2 12 5 5 12 5C19 5 22 12 22 12C22 12 19 19 12 19C5 19 2 12 2 12Z"
+                      stroke="black"
+                      stroke-opacity="0.6"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                      stroke="black"
+                      stroke-opacity="0.6"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  543
+                </div>
+              </div>
+              <button>
+                Read More
+                <svg
+                  width="16"
+                  height="15"
+                  viewBox="0 0 16 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3.33333 7.5H12.6667"
+                    stroke="black"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M8 3.125L12.6667 7.5L8 11.875"
+                    stroke="black"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <div class="blog-content">
+            <img src="../images/check1.jpg" alt="" />
+
+            <p class="blog-date">March. 15, 2023</p>
+            <p class="blog-title">Image Handling using React</p>
+            <p class="blog-text">
+              Far far away, behind the word mountains, far from the countries
+              Vokalia and Consonantia, there live the blind texts
+            </p>
+
+            <div class="blog-buttons">
+              <div class="blog-like">
+                <div>
+                  <svg
+                    width="20"
+                    height="17"
+                    viewBox="0 0 20 17"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M16.3 10.1667C17.641 8.95 19 7.49167 19 5.58333C19 4.36776 18.4785 3.20197 17.5502 2.34243C16.6219 1.48289 15.3628 1 14.05 1C12.466 1 11.35 1.41667 10 2.66667C8.65 1.41667 7.534 1 5.95 1C4.63718 1 3.37813 1.48289 2.44982 2.34243C1.52152 3.20197 1 4.36776 1 5.58333C1 7.5 2.35 8.95833 3.7 10.1667L10 16L16.3 10.1667Z"
+                      stroke="black"
+                      stroke-opacity="0.6"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  345
+                </div>
+                <div>
+                  <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M2 12C2 12 5 5 12 5C19 5 22 12 22 12C22 12 19 19 12 19C5 19 2 12 2 12Z"
+                      stroke="black"
+                      stroke-opacity="0.6"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                    <path
+                      d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z"
+                      stroke="black"
+                      stroke-opacity="0.6"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+                  543
+                </div>
+              </div>
+              <button>
+                Read More
+                <svg
+                  width="16"
+                  height="15"
+                  viewBox="0 0 16 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M3.33333 7.5H12.6667"
+                    stroke="black"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M8 3.125L12.6667 7.5L8 11.875"
+                    stroke="black"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- footerDiv start -->
+    <div class="footer">
+      <p>
+        &copy; <span id="footer-year">2024</span> | Joseph BT. All Rights
+        Reserved
+      </p>
+    </div>
+    <!-- footerDiv end -->
+  </body>
+</html>

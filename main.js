@@ -19,10 +19,11 @@ form.addEventListener("submit", (e) => {
   fetch(scriptURL, { method: "POST", body: new FormData(form) })
     .then((response) => {
       msg.innerHTML = "Message sent successfully";
-      setTimeout(function () {
+      setTimeout(() => {
         msg.innerHTML = "";
       }, 5000);
       form.reset();
+      console.log(response);
     })
     .catch((error) => console.error("Error!", error.message));
 });
