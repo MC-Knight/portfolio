@@ -222,7 +222,7 @@ body {
   color: var(--main-color);
 }
 
-.blog-buttons button {
+.blog-buttons a {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -232,8 +232,9 @@ body {
   background: transparent;
   font-weight: 500;
   cursor: pointer;
+  text-decoration: none;
 }
-.blog-buttons button svg {
+.blog-buttons a svg {
   color: var(--main-color);
 }
 
