@@ -59,6 +59,7 @@
         </div>
       </div>
       <div class="right-side">
+        <h1 class="small-screen"><span>Joseph</span> BT</h1>
         <div class="right-side-welcome">
           <h1>Welcome back! 👋</h1>
           <a href="../login/login.html">Logout</a>
@@ -87,7 +88,7 @@
         <div class="right-side-recent">
           <div class="recent-posts">
             <h1>Recent Blogs</h1>
-            <button>+ Add new blog</button>
+            <button id="open-add-blog-model">+ Add new blog</button>
           </div>
 
           <div class="recent-blogs">
@@ -179,7 +180,7 @@
                       15
                     </button>
 
-                    <button>
+                    <button id="open-edit-blog-model">
                       <svg
                         width="15"
                         height="15"
@@ -429,6 +430,136 @@
           </div>
         </div>
       </div>
+
+      <!-- add blog modal -->
+      <div class="modal" id="add-blog-modal">
+        <form action="">
+          <svg
+            width="22"
+            height="21"
+            viewBox="0 0 22 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="close-modal"
+            data-close-id="close-add-blog-modal"
+          >
+            <path
+              d="M15.972 5.29102L5.54956 15.7134"
+              stroke="#33383C"
+              stroke-width="0.868535"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M5.54956 5.29102L15.972 15.7134"
+              stroke="#33383C"
+              stroke-width="0.868535"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+
+          <h1>add new Blog</h1>
+
+          <div class="input-div-container">
+            <p>Title</p>
+            <div class="input-div">
+              <input
+                type="text"
+                name="title"
+                placeholder="Enter your blog title"
+              />
+            </div>
+          </div>
+
+          <div class="input-div-container">
+            <p>Blog poster</p>
+            <div class="input-div">
+              <input type="file" name="poster" />
+            </div>
+          </div>
+
+          <div class="input-div-container">
+            <p>Blog content</p>
+            <div class="textarea-div">
+              <textarea
+                rows="4"
+                placeholder="Enter your text here..."
+              ></textarea>
+            </div>
+          </div>
+
+          <button type="button">save blog</button>
+        </form>
+      </div>
+
+      <!-- edit blog modal -->
+      <div class="modal" id="edit-blog-modal">
+        <form action="">
+          <svg
+            width="22"
+            height="21"
+            viewBox="0 0 22 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="close-modal"
+            data-close-id="close-edit-blog-modal"
+          >
+            <path
+              d="M15.972 5.29102L5.54956 15.7134"
+              stroke="#33383C"
+              stroke-width="0.868535"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M5.54956 5.29102L15.972 15.7134"
+              stroke="#33383C"
+              stroke-width="0.868535"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+
+          <h1>edit Blog</h1>
+
+          <div class="input-div-container">
+            <p>Title</p>
+            <div class="input-div">
+              <input
+                type="text"
+                name="title"
+                placeholder="Enter your blog title"
+              />
+            </div>
+          </div>
+
+          <div class="input-div-container">
+            <p>Blog poster</p>
+            <div class="input-div">
+              <input type="file" name="poster" />
+            </div>
+          </div>
+
+          <div class="input-div-container">
+            <p>Blog content</p>
+            <div class="textarea-div">
+              <textarea
+                rows="4"
+                placeholder="Enter your text here..."
+              ></textarea>
+            </div>
+          </div>
+
+          <button type="button">save blog</button>
+        </form>
+      </div>
+
+      <!-- delete blog modal -->
+      <div class="modal" id="delete-blog-modal"></div>
     </div>
+
+    <!-- dashboard modal -->
+    <script src="dashboard.js"></script>
   </body>
 </html>
