@@ -156,10 +156,29 @@ body {
   justify-content: space-between;
 }
 
-.recent-posts h1 {
+.recent-posts > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.recent-posts > div h1 {
   font-weight: 500;
   font-size: 15px;
   color: var(--main-color);
+}
+
+.recent-posts > div .delete-message {
+  color: var(--orange-color);
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.recent-posts > div .added-message {
+  color: var(--green-color);
+  font-size: 15px;
+  font-weight: 400;
 }
 
 .recent-posts button {
@@ -194,8 +213,12 @@ body {
   gap: 10px;
 }
 
+.no-blog {
+  color: rgba(51, 56, 60, 0.5);
+  font-size: 15px;
+  font-weight: 400px;
+}
 .recent-blog-right-card {
-  width: 100%;
   height: 50px;
   display: flex;
   justify-content: flex-start;
@@ -210,7 +233,6 @@ body {
 
 .recent-blog-right-card-details {
   flex: 1;
-
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -219,11 +241,12 @@ body {
 }
 
 .recent-blog-text {
-  width: 80%;
+  width: 70%;
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: left;
   white-space: nowrap;
+  color: rgba(51, 56, 60, 0.8);
 }
 
 .recent-blog-buttons {
@@ -416,6 +439,7 @@ body {
   border: 1px solid var(--main-color);
   background: var(--main-color);
   border-radius: 5px;
+  cursor: pointer;
 }
 
 .delete-modal {

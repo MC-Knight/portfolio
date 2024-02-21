@@ -43,3 +43,8 @@ function openMenu() {
 function closeMenu() {
   menu.style.right = "-200px";
 }
+
+// ensure not to reset current blogs localStorage state
+if (!localStorage.getItem("blogs")) {
+  localStorage.setItem("blogs", JSON.stringify([]));
+}
