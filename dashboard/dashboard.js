@@ -100,7 +100,7 @@ const displayBlogs = () => {
 
       // create comment button
       const commentsButton = document.createElement("button");
-      // commentsButton.id = "open-comments-blog-model";
+      commentsButton.id = `open-comments-blog-model-${blog.id}`;
       commentsButton.innerHTML = `   
         <svg
           width="17"
@@ -173,7 +173,7 @@ const displayBlogs = () => {
 
       // create delete button
       const deleteButton = document.createElement("button");
-      // deleteButton.id = "open-delete-blog-model";
+      deleteButton.id = `open-delete-blog-model-${blog.id}`;
       deleteButton.innerHTML = ` 
         <svg
           width="15"
@@ -217,16 +217,16 @@ const displayBlogs = () => {
 
       recentBlogsRight.appendChild(blogCard);
 
-      // main conatiner for modals
+      // main container for modals
       const mainContainer = document.querySelector(".container");
 
-      //create div for eit modal
+      //create div for edit modal
       const editModal = document.createElement("div");
       editModal.classList.add("modal");
       editModal.id = `edit-blog-modal-${blog.id}`;
 
       editModal.innerHTML = `  
-        <form action="">
+        <form name="edit-blog-form-${blog.id}">
         <svg
           width="22"
           height="21"
@@ -280,12 +280,13 @@ const displayBlogs = () => {
             <textarea
               rows="4"
               placeholder="Enter your text here..."
+              name="content"
               required
             >${blog.content}</textarea>
           </div>
         </div>
     
-        <button type="button">edit blog</button>
+        <button type="button" onClick={editBlog(${blog.id})}>edit blog</button>
       </form>`;
 
       const openEditBlogButton = document.getElementById(
@@ -303,11 +304,307 @@ const displayBlogs = () => {
         editModal.style.display = "none";
       });
       mainContainer.appendChild(editModal);
+
+      //create div for delete modal
+      const deleteModal = document.createElement("div");
+      deleteModal.classList.add("modal");
+      deleteModal.id = `delete-blog-modal-${blog.id}`;
+
+      deleteModal.innerHTML = `
+        <div class="delete-modal">
+          <svg
+            width="22"
+            height="21"
+            viewBox="0 0 22 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="close-modal"
+            id="close-delete-blog-modal-${blog.id}"
+          >
+            <path
+              d="M15.972 5.29102L5.54956 15.7134"
+              stroke="#33383C"
+              stroke-width="0.868535"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M5.54956 5.29102L15.972 15.7134"
+              stroke="#33383C"
+              stroke-width="0.868535"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+
+          <div class="delete-modal-content">
+            <p>Are you sure?</p>
+            <p>you want to delete this blog,</p>
+            <p>${blog.title}</p>
+          </div>
+
+          <div class="delete-modal-buttons">
+            <button id="no-delete-blog-modal-${blog.id}">No</button>
+            <button onClick={deleteBlog(${blog.id})}>Continue</button>
+          </div>
+        </div>`;
+
+      mainContainer.appendChild(deleteModal);
+
+      // open and close delete blog model
+      const openDeleteBlogModel = document.getElementById(
+        `open-delete-blog-model-${blog.id}`
+      );
+      const closeDeleteBlogModel = document.getElementById(
+        `close-delete-blog-modal-${blog.id}`
+      );
+      const noDeleteBlogModel = document.getElementById(
+        `no-delete-blog-modal-${blog.id}`
+      );
+
+      openDeleteBlogModel.addEventListener("click", () => {
+        deleteModal.style.display = "flex";
+      });
+
+      closeDeleteBlogModel.addEventListener("click", () => {
+        deleteModal.style.display = "none";
+      });
+
+      noDeleteBlogModel.addEventListener("click", () => {
+        deleteModal.style.display = "none";
+      });
+
+      //create div for comments modal
+      const commentModal = document.createElement("div");
+      commentModal.classList.add("modal");
+      commentModal.id = `comments-blog-modal-${blog.id}`;
+
+      const commentsDiv = document.createElement("div");
+      commentsDiv.classList.add("comments-modal");
+
+      commentsDiv.innerHTML = `   
+        <div class="comments-modal-header">
+          <h1>Comments</h1>
+          <svg
+            width="22"
+            height="21"
+            viewBox="0 0 22 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            data-close-id="close-comments-blog-modal-${blog.id}"
+          >
+            <path
+              d="M15.972 5.29102L5.54956 15.7134"
+              stroke="#33383C"
+              stroke-width="0.868535"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M5.54956 5.29102L15.972 15.7134"
+              stroke="#33383C"
+              stroke-width="0.868535"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>`;
+
+      commentModal.appendChild(commentsDiv);
+
+      let blogComments = blog.comments || [];
+      if (blogComments.length === 0) {
+        const noBlogComments = document.createElement("p");
+        noBlogComments.classList.add("no-blog");
+        noBlogComments.textContent = "no comments at the moment";
+        commentsDiv.appendChild(noBlogComments);
+      } else {
+        blogComments.forEach((blogComment) => {
+          const singleCommentDiv = document.createElement("div");
+          singleCommentDiv.classList.add("comment-card");
+
+          const commnentContent = document.createElement("p");
+          commnentContent.innerHTML = `${blogComment.content}`;
+          singleCommentDiv.appendChild(commnentContent);
+
+          // Create the delete button div
+          const deleteButtonDiv = document.createElement("div");
+          deleteButtonDiv.classList.add("comment-delete");
+
+          const deleteButton = document.createElement("button");
+          deleteButton.id = `open-delete-blog-comment-model-${blogComment.id}`;
+          deleteButton.innerHTML = `
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 15 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1.875 3.75H13.125"
+              stroke="#FF4820"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M11.875 3.75V12.5C11.875 13.125 11.25 13.75 10.625 13.75H4.375C3.75 13.75 3.125 13.125 3.125 12.5V3.75"
+              stroke="#FF4820"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M5 3.75V2.5C5 1.875 5.625 1.25 6.25 1.25H8.75C9.375 1.25 10 1.875 10 2.5V3.75"
+              stroke="#FF4820"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          delete`;
+
+          deleteButtonDiv.appendChild(deleteButton);
+          singleCommentDiv.appendChild(deleteButtonDiv);
+          commentsDiv.append(singleCommentDiv);
+        });
+      }
+
+      mainContainer.appendChild(commentModal);
+      // open and close comment blog model
+
+      const openCommentBlogModel = document.getElementById(
+        `open-comments-blog-model-${blog.id}`
+      );
+      const closeCommentBlogModel = document.querySelector(
+        `[data-close-id="close-comments-blog-modal-${blog.id}"]`
+      );
+
+      openCommentBlogModel.addEventListener("click", () => {
+        commentModal.style.display = "flex";
+      });
+
+      closeCommentBlogModel.addEventListener("click", () => {
+        commentModal.style.display = "none";
+      });
     });
   }
 };
 
 displayBlogs();
+
+const makeDeleteCommentModels = () => {
+  //create div for delete comment modal
+  const populateComments = () => {
+    return new Promise((resolve, reject) => {
+      try {
+        // get blogs from local storage
+        let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+
+        let allComments = [];
+        for (let i = 0; i < blogs.length; i++) {
+          if (blogs[i].comments.length === 0) {
+            continue;
+          }
+          for (let j = 0; j < blogs[i].comments.length; j++) {
+            allComments.push(blogs[i].comments[j]);
+          }
+        }
+        resolve(allComments);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
+  populateComments()
+    .then((allComments) => {
+      console.log(allComments);
+      // main container for modals
+      const mainContainer = document.querySelector(".container");
+      setTimeout(() => {
+        for (let i = 0; i < allComments.length; i++) {
+          const deleteCommentModal = document.createElement("div");
+          deleteCommentModal.classList.add("modal");
+          deleteCommentModal.id = `delete-blog-comment-modal-${allComments[i].id}`;
+
+          deleteCommentModal.innerHTML = `
+          <div class="delete-modal">
+            <svg
+              width="22"
+              height="21"
+              viewBox="0 0 22 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="close-modal"
+              data-close-id="close-delete-blog-comment-modal-${allComments[i].id}"
+            >
+              <path
+                d="M15.972 5.29102L5.54956 15.7134"
+                stroke="#33383C"
+                stroke-width="0.868535"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M5.54956 5.29102L15.972 15.7134"
+                stroke="#33383C"
+                stroke-width="0.868535"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+    
+            <div class="delete-modal-content">
+              <p>Are you sure?</p>
+              <p>you want to delete this comment</p>
+               <p>${allComments[i].content}</p>
+            </div>
+    
+            <div class="delete-modal-buttons">
+              <button data-close-id="no-delete-blog-comment-modal-${allComments[i].id}">No</button>
+              <button>Continue</button>
+            </div>
+          </div>`;
+
+          mainContainer.appendChild(deleteCommentModal);
+
+          //open and close comment delete blog model
+          const openDeleteBlogCommentModel = document.getElementById(
+            `open-delete-blog-comment-model-${allComments[i].id}`
+          );
+
+          openDeleteBlogCommentModel.addEventListener("click", () => {
+            document.getElementById(
+              `comments-blog-modal-${allComments[i].blogId}`
+            ).style.display = "none";
+
+            deleteCommentModal.style.display = "flex";
+          });
+
+          const closeDeleteBlogCommentModel = document.querySelector(
+            `[data-close-id="close-delete-blog-comment-modal-${allComments[i].id}"]`
+          );
+
+          const noDeleteBlogCommentModel = document.querySelector(
+            `[data-close-id="no-delete-blog-comment-modal-${allComments[i].id}"]`
+          );
+
+          closeDeleteBlogCommentModel.addEventListener("click", () => {
+            deleteCommentModal.style.display = "none";
+            console.log("hey");
+          });
+
+          noDeleteBlogCommentModel.addEventListener("click", () => {
+            deleteCommentModal.style.display = "none";
+          });
+        }
+      }, 3000);
+    })
+    .catch((error) => {
+      console.error("An error occurred while populating comments:", error);
+    });
+};
+
+makeDeleteCommentModels();
 
 //save blog function
 const saveNewBlog = () => {
@@ -360,70 +657,73 @@ const saveNewBlog = () => {
 const saveBlogButton = document.getElementById("save-blog-button");
 saveBlogButton.addEventListener("click", saveNewBlog);
 
-// open and close delete blog model
-const deleteBlogModal = document.getElementById("delete-blog-modal");
-const openDeleteBlogModel = document.getElementById("open-delete-blog-model");
-const closeDeleteBlogModel = document.querySelector(
-  '[data-close-id="close-delete-blog-modal"]'
-);
-const noDeleteBlogModel = document.querySelector(
-  '[data-close-id="no-delete-blog-modal"]'
-);
+//edit blog function
+const editBlog = (blogId) => {
+  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+  const form = document.forms[`edit-blog-form-${blogId}`];
 
-openDeleteBlogModel.addEventListener("click", () => {
-  deleteBlogModal.style.display = "flex";
-});
+  //get form values
+  const title = form["title"].value;
+  const poster =
+    form["poster"].files.length > 0 ? form["poster"].files[0].name : null;
+  const content = form["content"].value;
 
-closeDeleteBlogModel.addEventListener("click", () => {
-  deleteBlogModal.style.display = "none";
-});
+  //edit blog data with new data
+  const editedBlog = blogs.find((b) => b.id == blogId);
+  if (!editedBlog) {
+    alert("blog not found");
+    return;
+  }
+  editedBlog.title = title;
+  editedBlog.poster = poster !== null ? poster : editedBlog.poster;
+  editedBlog.content = content;
 
-noDeleteBlogModel.addEventListener("click", () => {
-  deleteBlogModal.style.display = "none";
-});
+  //update localStorage blogs
+  localStorage.setItem("blogs", JSON.stringify(blogs));
 
-// open and close comment blog model
-const commentBlogModal = document.getElementById("comments-blog-modal");
-const openCommentBlogModel = document.getElementById(
-  "open-comments-blog-model"
-);
-const closeCommentBlogModel = document.querySelector(
-  '[data-close-id="close-comments-blog-modal"]'
-);
+  //current opened modal
+  const currentOpenedModal = document.getElementById(
+    `edit-blog-modal-${blogId}`
+  );
+  currentOpenedModal.style.display = "none";
 
-openCommentBlogModel.addEventListener("click", () => {
-  commentBlogModal.style.display = "flex";
-});
+  const blogMessage = document.getElementById("blog-message");
+  blogMessage.innerHTML = "blog edited successfully";
+  blogMessage.classList.add("added-message");
 
-closeCommentBlogModel.addEventListener("click", () => {
-  commentBlogModal.style.display = "none";
-});
+  setTimeout(() => {
+    blogMessage.innerHTML = "";
+    blogMessage.classList.remove("added-message");
+    window.location.reload();
+  }, 3000);
+};
 
-// open and close comment delete blog model
-const deleteBlogCommentModal = document.getElementById(
-  "delete-blog-comment-modal"
-);
-const openDeleteBlogCommentModel = document.getElementById(
-  "open-delete-blog-comment-model"
-);
-const closeDeleteBlogCommentModel = document.querySelector(
-  '[data-close-id="close-delete-blog-comment-modal"]'
-);
-const noDeleteBlogCommentModel = document.querySelector(
-  '[data-close-id="no-delete-blog-comment-modal"]'
-);
+//delete blog function
+const deleteBlog = (blogId) => {
+  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+  const index = blogs.findIndex((blog) => blog.id === blogId);
 
-openDeleteBlogCommentModel.addEventListener("click", () => {
-  commentBlogModal.style.display = "none";
-  deleteBlogCommentModal.style.display = "flex";
-});
+  if (index === -1) {
+    alert("Blog not found");
+    return;
+  }
+  blogs.splice(index, 1)[0];
 
-closeDeleteBlogCommentModel.addEventListener("click", () => {
-  commentBlogModal.style.display = "flex";
-  deleteBlogCommentModal.style.display = "none";
-});
+  localStorage.setItem("blogs", JSON.stringify(blogs));
 
-noDeleteBlogCommentModel.addEventListener("click", () => {
-  commentBlogModal.style.display = "flex";
-  deleteBlogCommentModal.style.display = "none";
-});
+  //current opened modal
+  const currentOpenedModal = document.getElementById(
+    `delete-blog-modal-${blogId}`
+  );
+  currentOpenedModal.style.display = "none";
+
+  const blogMessage = document.getElementById("blog-message");
+  blogMessage.innerHTML = "blog deleted successfully";
+  blogMessage.classList.add("delete-message");
+
+  setTimeout(() => {
+    blogMessage.innerHTML = "";
+    blogMessage.classList.remove("delete-message");
+    window.location.reload();
+  }, 3000);
+};

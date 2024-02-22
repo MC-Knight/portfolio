@@ -465,6 +465,12 @@ body {
   font-weight: 400;
 }
 
+.delete-modal-content p:nth-child(3) {
+  margin: 0px auto;
+  text-align: center;
+  width: 60%;
+}
+
 .delete-modal-buttons {
   width: 80%;
   display: flex;
@@ -572,7 +578,7 @@ body {
   background: var(--white-color);
 }
 
-@media screen and (max-width: 586px) {
+@media screen and (max-width: 856px) {
   .small-screen {
     width: 100%;
     display: flex;
