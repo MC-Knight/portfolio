@@ -69,6 +69,8 @@ body {
 }
 
 .blog-main-title {
+  text-align: left;
+  width: 100%;
   padding: 20px 0;
   color: var(--main-color);
   font-weight: 600;
