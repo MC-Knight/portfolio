@@ -517,7 +517,6 @@ const makeDeleteCommentModels = () => {
 
   populateComments()
     .then((allComments) => {
-      console.log(allComments);
       // main container for modals
       const mainContainer = document.querySelector(".container");
       setTimeout(() => {
@@ -561,11 +560,19 @@ const makeDeleteCommentModels = () => {
     
             <div class="delete-modal-buttons">
               <button data-close-id="no-delete-blog-comment-modal-${allComments[i].id}">No</button>
-              <button>Continue</button>
+              <button id="continue-delete-blog-comment-${allComments[i].id}">Continue</button>
             </div>
           </div>`;
 
           mainContainer.appendChild(deleteCommentModal);
+
+          // Add event listener to the continue button
+          const continueButton = document.getElementById(
+            `continue-delete-blog-comment-${allComments[i].id}`
+          );
+          continueButton.addEventListener("click", () =>
+            deleteBlogComment(allComments[i].blogId, allComments[i].id)
+          );
 
           //open and close comment delete blog model
           const openDeleteBlogCommentModel = document.getElementById(
@@ -632,6 +639,7 @@ const saveNewBlog = () => {
     comments: [],
     views: 0,
     likes: 0,
+    isLiked: false,
   };
 
   blogs.push(newBlog);
@@ -727,3 +735,98 @@ const deleteBlog = (blogId) => {
     window.location.reload();
   }, 3000);
 };
+
+//delete blog comment
+const deleteBlogComment = (blogId, commentId) => {
+  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+  const blogIndex = blogs.findIndex((blog) => blog.id === blogId);
+
+  if (blogIndex === -1) {
+    alert("Blog not found");
+    return;
+  }
+
+  const commentIndex = blogs[blogIndex].comments.findIndex(
+    (comment) => comment.id === commentId
+  );
+
+  if (commentIndex === -1) {
+    alert("Comment not found");
+    return;
+  }
+
+  blogs[blogIndex].comments.splice(commentIndex, 1)[0];
+
+  localStorage.setItem("blogs", JSON.stringify(blogs));
+
+  //current opened modal
+  const currentOpenedModal = document.getElementById(
+    `delete-blog-comment-modal-${commentId}`
+  );
+  currentOpenedModal.style.display = "none";
+
+  const blogMessage = document.getElementById("blog-message");
+  blogMessage.innerHTML = "comment deleted successfully";
+  blogMessage.classList.add("added-message");
+
+  setTimeout(() => {
+    blogMessage.innerHTML = "";
+    blogMessage.classList.remove("added-message");
+    window.location.reload();
+  }, 3000);
+};
+
+const setLikeCommentsandViewNumbers = () => {
+  const posts = document.getElementById("blogs-numbers");
+  const comments = document.getElementById("comments-number");
+  const likes = document.getElementById("likes-number");
+
+  // get blogs from local storage
+  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+
+  posts.innerHTML = blogs.length;
+
+  let allComments = [];
+  for (let i = 0; i < blogs.length; i++) {
+    if (blogs[i].comments.length === 0) {
+      continue;
+    }
+    for (let j = 0; j < blogs[i].comments.length; j++) {
+      allComments.push(blogs[i].comments[j]);
+    }
+  }
+
+  comments.innerHTML = allComments.length;
+
+  let likesNumber = 0;
+  for (let i = 0; i < blogs.length; i++) {
+    likesNumber += blogs[i].likes;
+  }
+
+  likes.innerHTML = likesNumber;
+};
+setLikeCommentsandViewNumbers();
+
+const mostLikedPost = () => {
+  // get blogs from local storage
+  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+  const mostLikedDiv = document.querySelector(".recent-blogs-left");
+
+  const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes);
+
+  for (let i = 0; i < sortedBlogs.length; i++) {
+    const likesBlogCard = document.createElement("div");
+    likesBlogCard.classList.add("recent-blog-left-card");
+    const blogTitle = document.createElement("p");
+    blogTitle.innerHTML = sortedBlogs[i].title;
+
+    const blogLikes = document.createElement("p");
+    blogLikes.innerHTML = sortedBlogs[i].likes;
+
+    likesBlogCard.appendChild(blogTitle);
+    likesBlogCard.appendChild(blogLikes);
+
+    mostLikedDiv.appendChild(likesBlogCard);
+  }
+};
+mostLikedPost();

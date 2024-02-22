@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blog | title</title>
+    <title>Blog</title>
 
     <link
       rel="icon"
@@ -23,15 +23,15 @@
       </div>
 
       <div class="blog-container">
-        <img src="../images/check.jpg" alt="" />
+        <img alt="" id="blog-image-poster" />
 
-        <p class="blog-main-title">Image Handling using Multer in REACT.</p>
+        <p class="blog-main-title"></p>
 
         <div class="blog-writter">
           <img src="../images/profile.png" alt="" />
           <div class="blog-writter-names">
             <p>Byishimo Teto Joseph</p>
-            <p>Feb 10, 2023</p>
+            <p id="blog-date">Feb 10, 2023</p>
           </div>
         </div>
 
@@ -53,7 +53,7 @@
                 stroke-linejoin="round"
               />
             </svg>
-            345
+            <p id="likes"></p>
           </div>
           <div>
             <svg
@@ -80,7 +80,7 @@
                 stroke-linejoin="round"
               />
             </svg>
-            543
+            <p id="views"></p>
           </div>
 
           <div>
@@ -101,47 +101,11 @@
               />
             </svg>
 
-            34
+            <p id="comment-number"></p>
           </div>
         </div>
 
-        <p class="blog-main-content">
-          In modern web development, handling image uploads is a common
-          requirement for various applications, from social media platforms to
-          e-commerce websites. In this blog post, we’ll explore how to use
-          Multer, a popular middleware for handling file uploads in Node.js
-          applications, to store images on the server and save their URLs in a
-          MongoDB database. We will also delve into the controller functions to
-          POST and GET images, explaining the concept of a Blob along the way.
-          Let’s get started!
-        </p>
-
-        <p class="blog-main-content">
-          Before you begin, make sure you have Node.js and MongoDB installed. If
-          not, you can download and install them from their official websites.
-        </p>
-
-        <p class="blog-main-content">
-          To store image URLs in MongoDB, you need to create a model
-        </p>
-
-        <p class="blog-main-content">
-          Multer ? : is a middleware for Express, a web application framework
-          for Node.js, that simplifies the process of handling file uploads. It
-          allows you to upload files, such as images, directly from a client to
-          the server, and then you can process and store these files as needed.
-          For uploading the image we need a middleware So make a Middleware
-          folder and make file “multerStorage.js”
-        </p>
-
-        <p class="blog-main-content">
-          Certainly, to complete the functionality for posting and getting
-          images in a web application, you’ll need both frontend and backend
-          components. Below, I’ll provide you with JavaScript functions for the
-          frontend that you can integrate into your client-side code, which
-          could be written using HTML, CSS, and a JavaScript framework like
-          React or vanilla JavaScript.
-        </p>
+        <p class="blog-main-content"></p>
 
         <p class="more-recommendations">More Recommendations</p>
 
@@ -331,5 +295,8 @@
       </p>
     </div>
     <!-- footerDiv end -->
+
+    <!-- blog script -->
+    <script src="blog.js"></script>
   </body>
 </html>
