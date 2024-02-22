@@ -95,6 +95,9 @@ body {
   color: var(--blue-color);
   font-weight: 400;
   font-size: 15px;
+  border: 1px solid var(--blue-color);
+  border-radius: 5px;
+  padding: 5px;
 }
 
 .right-side-cards {

@@ -571,7 +571,10 @@ const makeDeleteCommentModels = () => {
             `continue-delete-blog-comment-${allComments[i].id}`
           );
           continueButton.addEventListener("click", () =>
-            deleteBlogComment(allComments[i].blogId, allComments[i].id)
+            deleteBlogComment(
+              parseInt(allComments[i].blogId, 10),
+              allComments[i].id
+            )
           );
 
           //open and close comment delete blog model
@@ -597,7 +600,6 @@ const makeDeleteCommentModels = () => {
 
           closeDeleteBlogCommentModel.addEventListener("click", () => {
             deleteCommentModal.style.display = "none";
-            console.log("hey");
           });
 
           noDeleteBlogCommentModel.addEventListener("click", () => {
@@ -640,6 +642,7 @@ const saveNewBlog = () => {
     views: 0,
     likes: 0,
     isLiked: false,
+    isViewed: false,
   };
 
   blogs.push(newBlog);
@@ -814,19 +817,26 @@ const mostLikedPost = () => {
 
   const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes);
 
-  for (let i = 0; i < sortedBlogs.length; i++) {
-    const likesBlogCard = document.createElement("div");
-    likesBlogCard.classList.add("recent-blog-left-card");
-    const blogTitle = document.createElement("p");
-    blogTitle.innerHTML = sortedBlogs[i].title;
+  if (blogs.length === 0) {
+    const noBlogs = document.createElement("p");
+    noBlogs.classList.add("no-blog");
+    noBlogs.textContent = "no blogs at the moment";
+    mostLikedDiv.appendChild(noBlogs);
+  } else {
+    for (let i = 0; i < sortedBlogs.length; i++) {
+      const likesBlogCard = document.createElement("div");
+      likesBlogCard.classList.add("recent-blog-left-card");
+      const blogTitle = document.createElement("p");
+      blogTitle.innerHTML = sortedBlogs[i].title;
 
-    const blogLikes = document.createElement("p");
-    blogLikes.innerHTML = sortedBlogs[i].likes;
+      const blogLikes = document.createElement("p");
+      blogLikes.innerHTML = sortedBlogs[i].likes;
 
-    likesBlogCard.appendChild(blogTitle);
-    likesBlogCard.appendChild(blogLikes);
+      likesBlogCard.appendChild(blogTitle);
+      likesBlogCard.appendChild(blogLikes);
 
-    mostLikedDiv.appendChild(likesBlogCard);
+      mostLikedDiv.appendChild(likesBlogCard);
+    }
   }
 };
 mostLikedPost();
