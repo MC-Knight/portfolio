@@ -100,7 +100,7 @@ const displayBlogs = () => {
 
       // create comment button
       const commentsButton = document.createElement("button");
-      // commentsButton.id = "open-comments-blog-model";
+      commentsButton.id = `open-comments-blog-model-${blog.id}`;
       commentsButton.innerHTML = `   
         <svg
           width="17"
@@ -373,11 +373,238 @@ const displayBlogs = () => {
       noDeleteBlogModel.addEventListener("click", () => {
         deleteModal.style.display = "none";
       });
+
+      //create div for comments modal
+      const commentModal = document.createElement("div");
+      commentModal.classList.add("modal");
+      commentModal.id = `comments-blog-modal-${blog.id}`;
+
+      const commentsDiv = document.createElement("div");
+      commentsDiv.classList.add("comments-modal");
+
+      commentsDiv.innerHTML = `   
+        <div class="comments-modal-header">
+          <h1>Comments</h1>
+          <svg
+            width="22"
+            height="21"
+            viewBox="0 0 22 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            data-close-id="close-comments-blog-modal-${blog.id}"
+          >
+            <path
+              d="M15.972 5.29102L5.54956 15.7134"
+              stroke="#33383C"
+              stroke-width="0.868535"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M5.54956 5.29102L15.972 15.7134"
+              stroke="#33383C"
+              stroke-width="0.868535"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>`;
+
+      commentModal.appendChild(commentsDiv);
+
+      let blogComments = blog.comments || [];
+      if (blogComments.length === 0) {
+        const noBlogComments = document.createElement("p");
+        noBlogComments.classList.add("no-blog");
+        noBlogComments.textContent = "no comments at the moment";
+        commentsDiv.appendChild(noBlogComments);
+      } else {
+        blogComments.forEach((blogComment) => {
+          const singleCommentDiv = document.createElement("div");
+          singleCommentDiv.classList.add("comment-card");
+
+          const commnentContent = document.createElement("p");
+          commnentContent.innerHTML = `${blogComment.content}`;
+          singleCommentDiv.appendChild(commnentContent);
+
+          // Create the delete button div
+          const deleteButtonDiv = document.createElement("div");
+          deleteButtonDiv.classList.add("comment-delete");
+
+          const deleteButton = document.createElement("button");
+          deleteButton.id = `open-delete-blog-comment-model-${blogComment.id}`;
+          deleteButton.innerHTML = `
+          <svg
+            width="15"
+            height="15"
+            viewBox="0 0 15 15"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1.875 3.75H13.125"
+              stroke="#FF4820"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M11.875 3.75V12.5C11.875 13.125 11.25 13.75 10.625 13.75H4.375C3.75 13.75 3.125 13.125 3.125 12.5V3.75"
+              stroke="#FF4820"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M5 3.75V2.5C5 1.875 5.625 1.25 6.25 1.25H8.75C9.375 1.25 10 1.875 10 2.5V3.75"
+              stroke="#FF4820"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          delete`;
+
+          deleteButtonDiv.appendChild(deleteButton);
+          singleCommentDiv.appendChild(deleteButtonDiv);
+          commentsDiv.append(singleCommentDiv);
+        });
+      }
+
+      mainContainer.appendChild(commentModal);
+      // open and close comment blog model
+
+      const openCommentBlogModel = document.getElementById(
+        `open-comments-blog-model-${blog.id}`
+      );
+      const closeCommentBlogModel = document.querySelector(
+        `[data-close-id="close-comments-blog-modal-${blog.id}"]`
+      );
+
+      openCommentBlogModel.addEventListener("click", () => {
+        commentModal.style.display = "flex";
+      });
+
+      closeCommentBlogModel.addEventListener("click", () => {
+        commentModal.style.display = "none";
+      });
     });
   }
 };
 
 displayBlogs();
+
+const makeDeleteCommentModels = () => {
+  //create div for delete comment modal
+  const populateComments = () => {
+    return new Promise((resolve, reject) => {
+      try {
+        // get blogs from local storage
+        let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+
+        let allComments = [];
+        for (let i = 0; i < blogs.length; i++) {
+          if (blogs[i].comments.length === 0) {
+            continue;
+          }
+          for (let j = 0; j < blogs[i].comments.length; j++) {
+            allComments.push(blogs[i].comments[j]);
+          }
+        }
+        resolve(allComments);
+      } catch (error) {
+        reject(error);
+      }
+    });
+  };
+
+  populateComments()
+    .then((allComments) => {
+      console.log(allComments);
+      // main container for modals
+      const mainContainer = document.querySelector(".container");
+      setTimeout(() => {
+        for (let i = 0; i < allComments.length; i++) {
+          const deleteCommentModal = document.createElement("div");
+          deleteCommentModal.classList.add("modal");
+          deleteCommentModal.id = `delete-blog-comment-modal-${allComments[i].id}`;
+
+          deleteCommentModal.innerHTML = `
+          <div class="delete-modal">
+            <svg
+              width="22"
+              height="21"
+              viewBox="0 0 22 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              class="close-modal"
+              data-close-id="close-delete-blog-comment-modal-${allComments[i].id}"
+            >
+              <path
+                d="M15.972 5.29102L5.54956 15.7134"
+                stroke="#33383C"
+                stroke-width="0.868535"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <path
+                d="M5.54956 5.29102L15.972 15.7134"
+                stroke="#33383C"
+                stroke-width="0.868535"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+    
+            <div class="delete-modal-content">
+              <p>Are you sure?</p>
+              <p>you want to delete this comment</p>
+               <p>${allComments[i].content}</p>
+            </div>
+    
+            <div class="delete-modal-buttons">
+              <button data-close-id="no-delete-blog-comment-modal-${allComments[i].id}">No</button>
+              <button>Continue</button>
+            </div>
+          </div>`;
+
+          mainContainer.appendChild(deleteCommentModal);
+
+          //open and close comment delete blog model
+          const openDeleteBlogCommentModel = document.getElementById(
+            `open-delete-blog-comment-model-${allComments[i].id}`
+          );
+
+          openDeleteBlogCommentModel.addEventListener("click", () => {
+            document.getElementById(
+              `comments-blog-modal-${allComments[i].blogId}`
+            ).style.display = "none";
+
+            deleteCommentModal.style.display = "flex";
+          });
+
+          const closeDeleteBlogCommentModel = document.querySelector(
+            `[data-close-id="close-delete-blog-comment-modal-${allComments[i].id}"]`
+          );
+
+          const noDeleteBlogCommentModel = document.querySelector(
+            `[data-close-id="no-delete-blog-comment-modal-${allComments[i].id}"]`
+          );
+
+          closeDeleteBlogCommentModel.addEventListener("click", () => {
+            deleteCommentModal.style.display = "none";
+            console.log("hey");
+          });
+
+          noDeleteBlogCommentModel.addEventListener("click", () => {
+            deleteCommentModal.style.display = "none";
+          });
+        }
+      }, 3000);
+    })
+    .catch((error) => {
+      console.error("An error occurred while populating comments:", error);
+    });
+};
+
+makeDeleteCommentModels();
 
 //save blog function
 const saveNewBlog = () => {
@@ -500,49 +727,3 @@ const deleteBlog = (blogId) => {
     window.location.reload();
   }, 3000);
 };
-
-// open and close comment blog model
-const commentBlogModal = document.getElementById("comments-blog-modal");
-const openCommentBlogModel = document.getElementById(
-  "open-comments-blog-model"
-);
-const closeCommentBlogModel = document.querySelector(
-  '[data-close-id="close-comments-blog-modal"]'
-);
-
-openCommentBlogModel.addEventListener("click", () => {
-  commentBlogModal.style.display = "flex";
-});
-
-closeCommentBlogModel.addEventListener("click", () => {
-  commentBlogModal.style.display = "none";
-});
-
-// open and close comment delete blog model
-const deleteBlogCommentModal = document.getElementById(
-  "delete-blog-comment-modal"
-);
-const openDeleteBlogCommentModel = document.getElementById(
-  "open-delete-blog-comment-model"
-);
-const closeDeleteBlogCommentModel = document.querySelector(
-  '[data-close-id="close-delete-blog-comment-modal"]'
-);
-const noDeleteBlogCommentModel = document.querySelector(
-  '[data-close-id="no-delete-blog-comment-modal"]'
-);
-
-openDeleteBlogCommentModel.addEventListener("click", () => {
-  commentBlogModal.style.display = "none";
-  deleteBlogCommentModal.style.display = "flex";
-});
-
-closeDeleteBlogCommentModel.addEventListener("click", () => {
-  commentBlogModal.style.display = "flex";
-  deleteBlogCommentModal.style.display = "none";
-});
-
-noDeleteBlogCommentModel.addEventListener("click", () => {
-  commentBlogModal.style.display = "flex";
-  deleteBlogCommentModal.style.display = "none";
-});
