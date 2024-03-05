@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="../images/favicon-32x32.png"
+    />
+    <link rel="stylesheet" href="../css/dashboard.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="left-side">
+        <h1><span>Joseph</span> BT</h1>
+
+        <div class="nav-toggle">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M9 3H4C3.44772 3 3 3.44772 3 4V11C3 11.5523 3.44772 12 4 12H9C9.55228 12 10 11.5523 10 11V4C10 3.44772 9.55228 3 9 3Z"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M20 3H15C14.4477 3 14 3.44772 14 4V7C14 7.55228 14.4477 8 15 8H20C20.5523 8 21 7.55228 21 7V4C21 3.44772 20.5523 3 20 3Z"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M20 12H15C14.4477 12 14 12.4477 14 13V20C14 20.5523 14.4477 21 15 21H20C20.5523 21 21 20.5523 21 20V13C21 12.4477 20.5523 12 20 12Z"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M9 16H4C3.44772 16 3 16.4477 3 17V20C3 20.5523 3.44772 21 4 21H9C9.55228 21 10 20.5523 10 20V17C10 16.4477 9.55228 16 9 16Z"
+              stroke="white"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          Dashboard
+        </div>
+      </div>
+      <div class="right-side">
+        <h1 class="small-screen"><span>Joseph</span> BT</h1>
+        <div class="right-side-welcome">
+          <h1>Welcome back! 👋</h1>
+          <a href="./login.html">Logout</a>
+        </div>
+
+        <div class="right-side-cards">
+          <div class="card">
+            <img src="../files/posts.png" alt="" />
+            <p class="card-text">Total Posts</p>
+            <p class="card-number" id="blogs-numbers"></p>
+          </div>
+
+          <div class="card">
+            <img src="../files/comments.png" alt="" />
+            <p class="card-text">Total Comments</p>
+            <p class="card-number" id="comments-number"></p>
+          </div>
+
+          <div class="card">
+            <img src="../files/likes.png" alt="" />
+            <p class="card-text">Total Likes</p>
+            <p class="card-number" id="likes-number"></p>
+          </div>
+        </div>
+
+        <div class="right-side-recent">
+          <div class="recent-posts">
+            <div>
+              <h1>Recent Blogs</h1>
+              <p id="blog-message"></p>
+            </div>
+            <button id="open-add-blog-model">+ Add new blog</button>
+          </div>
+
+          <div class="recent-blogs">
+            <div class="recent-blogs-right" id="recent-blogs-right"></div>
+
+            <div class="recent-blogs-left">
+              <h1>Most viewed posts</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- add blog modal -->
+      <div class="modal" id="add-blog-modal">
+        <form name="add-blog-form">
+          <svg
+            width="22"
+            height="21"
+            viewBox="0 0 22 21"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            class="close-modal"
+            data-close-id="close-add-blog-modal"
+          >
+            <path
+              d="M15.972 5.29102L5.54956 15.7134"
+              stroke="#33383C"
+              stroke-width="0.868535"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+            <path
+              d="M5.54956 5.29102L15.972 15.7134"
+              stroke="#33383C"
+              stroke-width="0.868535"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+
+          <h1>add new Blog</h1>
+
+          <div class="input-div-container">
+            <p>Title</p>
+            <div class="input-div">
+              <input
+                type="text"
+                name="title"
+                placeholder="Enter your blog title"
+                required
+              />
+            </div>
+          </div>
+
+          <div class="input-div-container">
+            <p>Blog poster</p>
+            <div class="input-div">
+              <input type="file" name="poster" required />
+            </div>
+          </div>
+
+          <div class="input-div-container">
+            <p>Blog content</p>
+            <div class="textarea-div">
+              <textarea
+                rows="4"
+                name="content"
+                placeholder="Enter your text here..."
+                required
+              ></textarea>
+            </div>
+          </div>
+
+          <button type="button" id="save-blog-button">save blog</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- dashboard modal script-->
+    <script src="../dest/dashboard.js"></script>
+  </body>
+</html>
