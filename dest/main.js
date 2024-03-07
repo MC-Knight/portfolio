@@ -146,7 +146,7 @@ const loadLastTwoBlogs = () => {
               ${lastTwoBlogs[i].views}
             </div>
           </div>
-          <a href="blog/blog.html?id=${lastTwoBlogs[i].id}">
+          <a href="./pages/blog.html?id=${lastTwoBlogs[i].id}">
             Read More
             <svg
               width="16"
