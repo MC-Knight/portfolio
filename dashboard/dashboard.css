@@ -401,6 +401,9 @@ body {
 
 .input-div input[type="file"] {
   margin-top: 15px;
+  color: rgba(51, 56, 60, 0.3);
+  font-weight: 400;
+  font-size: 15px;
 }
 
 .textarea-div {
@@ -424,6 +427,13 @@ body {
   border: none;
   resize: none;
   color: var(--main-color);
+  padding: 10px;
+}
+
+.textarea-div textarea[placeholder] {
+  color: rgba(51, 56, 60, 0.3);
+  font-weight: 400;
+  font-size: 15px;
 }
 
 .input-div input[placeholder] {
