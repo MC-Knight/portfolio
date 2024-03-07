@@ -1,3 +1,19 @@
+// onscroll navigation bar
+window.addEventListener("scroll", () => {
+  const navbar = document.getElementById("onscroll-navbar");
+  if (navbar) {
+    if (window.innerWidth >= 956) {
+      if (window.scrollY > 40) {
+        navbar.style.display = "flex";
+      } else {
+        navbar.style.display = "none";
+      }
+    } else {
+      navbar.style.display = "none";
+    }
+  }
+});
+
 //age span
 const span = document.getElementById("ageSpan");
 const currentYear = new Date().getFullYear();
@@ -16,6 +32,20 @@ const msg = document.getElementById("msg");
 
 form.addEventListener("submit", (e) => {
   e.preventDefault();
+  if (form["name"].value == null || form["name"].value == "") {
+    alert("please enter your name.");
+    return;
+  }
+
+  if (form["email"].value == null || form["email"].value == "") {
+    alert("please enter your email.");
+    return;
+  }
+
+  if (form["Message"].value == null || form["Message"].value == "") {
+    alert("please enter your Message.");
+    return;
+  }
   fetch(scriptURL, { method: "POST", body: new FormData(form) })
     .then((response) => {
       msg.innerHTML = "Message sent successfully";

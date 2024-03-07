@@ -9,7 +9,7 @@ const currentBlog = blogs.find((blog) => blog.id === parseInt(blogId, 10));
 const loadBlog = () => {
   if (!currentBlog) {
     alert("oops blog not found");
-    return;
+    return (window.location.href = "/index.html");
   }
 
   document.title = currentBlog.title;

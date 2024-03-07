@@ -624,8 +624,20 @@ const saveNewBlog = () => {
   //get form values
   const title = form["title"].value;
   const poster =
-    form["poster"].files.length > 0 ? form["poster"].files[0].name : null;
+    form["poster"].files.length > 0
+      ? form["poster"].files[0].name
+      : "default.jpg";
   const content = form["content"].value;
+
+  if (!title || title == null || title == "") {
+    alert("Please enter a title.");
+    return;
+  }
+
+  if (!content || content == null || content == "") {
+    alert("Please enter content.");
+    return;
+  }
 
   //add new blog to blogs array
   const newBlog = {
@@ -683,6 +695,16 @@ const editBlog = (blogId) => {
   const editedBlog = blogs.find((b) => b.id == blogId);
   if (!editedBlog) {
     alert("blog not found");
+    return;
+  }
+
+  if (!title || title == null || title == "") {
+    alert("Please enter a title.");
+    return;
+  }
+
+  if (!content || content == null || content == "") {
+    alert("Please enter content.");
     return;
   }
   editedBlog.title = title;
