@@ -535,12 +535,7 @@ const makeDeleteCommentModels = () => {
                 // Add event listener to the continue button
                 const continueButton = document.getElementById(`continue-delete-blog-comment-${allComments[i].id}`);
                 if (continueButton !== null) {
-                    continueButton.addEventListener("click", () => 
-                    //   deleteBlogComment(
-                    //     parseInt(allComments[i].blogId, 10),
-                    //     allComments[i].id
-                    //   )
-                    console.log("delete"));
+                    continueButton.addEventListener("click", () => deleteBlogComment(parseInt(allComments[i].blogId, 10), allComments[i].id));
                 }
                 //open and close comment delete blog model
                 const openDeleteBlogCommentModel = document.getElementById(`open-delete-blog-comment-model-${allComments[i].id}`);
@@ -631,3 +626,167 @@ const saveNewBlog = () => {
 const saveBlogButton = document.getElementById("save-blog-button");
 if (saveBlogButton !== null)
     saveBlogButton.addEventListener("click", saveNewBlog);
+//edit blog function
+const editBlog = (blogId) => {
+    let blogs = JSON.parse(localStorage.getItem("blogs") || "[]");
+    const editBlogform = document.forms.namedItem(`edit-blog-form-${blogId}`);
+    if (editBlogform !== null) {
+        const titleField = editBlogform["title"];
+        const contentField = editBlogform["content"];
+        const poster = editBlogform["poster"].files.length > 0
+            ? editBlogform["poster"].files[0].name
+            : "default.jpg";
+        if (titleField.value.trim() === "") {
+            alert("Please enter a title.");
+            return;
+        }
+        if (contentField.value.trim() === "") {
+            alert("Please enter content.");
+            return;
+        }
+        //edit blog data with new data
+        const editedBlog = blogs.find((b) => b.id == blogId);
+        if (!editedBlog) {
+            alert("blog not found");
+            return;
+        }
+        if (titleField.value.trim() === "") {
+            alert("Please enter a title.");
+            return;
+        }
+        if (contentField.value.trim() === "") {
+            alert("Please enter content.");
+            return;
+        }
+        editedBlog.title = titleField.value.trim();
+        editedBlog.poster = poster !== null ? poster : editedBlog.poster;
+        editedBlog.content = contentField.value.trim();
+        //update localStorage blogs
+        localStorage.setItem("blogs", JSON.stringify(blogs));
+    }
+    //current opened modal
+    const currentOpenedModal = document.getElementById(`edit-blog-modal-${blogId}`);
+    if (currentOpenedModal !== null)
+        currentOpenedModal.style.display = "none";
+    const blogMessage = document.getElementById("blog-message");
+    if (blogMessage !== null) {
+        blogMessage.innerHTML = "blog edited successfully";
+        blogMessage.classList.add("added-message");
+        setTimeout(() => {
+            blogMessage.innerHTML = "";
+            blogMessage.classList.remove("added-message");
+            window.location.reload();
+        }, 3000);
+    }
+};
+//delete blog function
+const deleteBlog = (blogId) => {
+    let blogs = JSON.parse(localStorage.getItem("blogs") || "[]");
+    const index = blogs.findIndex((blog) => blog.id === blogId);
+    if (index === -1) {
+        alert("Blog not found");
+        return;
+    }
+    blogs.splice(index, 1)[0];
+    localStorage.setItem("blogs", JSON.stringify(blogs));
+    //current opened modal
+    const currentOpenedModal = document.getElementById(`delete-blog-modal-${blogId}`);
+    if (currentOpenedModal !== null)
+        currentOpenedModal.style.display = "none";
+    const blogMessage = document.getElementById("blog-message");
+    if (blogMessage !== null) {
+        blogMessage.innerHTML = "blog deleted successfully";
+        blogMessage.classList.add("delete-message");
+        setTimeout(() => {
+            blogMessage.innerHTML = "";
+            blogMessage.classList.remove("delete-message");
+            window.location.reload();
+        }, 3000);
+    }
+};
+//delete blog comment
+const deleteBlogComment = (blogId, commentId) => {
+    let blogs = JSON.parse(localStorage.getItem("blogs") || "[]");
+    const blogIndex = blogs.findIndex((blog) => blog.id === blogId);
+    if (blogIndex === -1) {
+        alert("Blog not found");
+        return;
+    }
+    const commentIndex = blogs[blogIndex].comments.findIndex((comment) => comment.id === commentId);
+    if (commentIndex === -1) {
+        alert("Comment not found");
+        return;
+    }
+    blogs[blogIndex].comments.splice(commentIndex, 1)[0];
+    localStorage.setItem("blogs", JSON.stringify(blogs));
+    //current opened modal
+    const currentOpenedModal = document.getElementById(`delete-blog-comment-modal-${commentId}`);
+    if (currentOpenedModal !== null)
+        currentOpenedModal.style.display = "none";
+    const blogMessage = document.getElementById("blog-message");
+    if (blogMessage !== null) {
+        blogMessage.innerHTML = "comment deleted successfully";
+        blogMessage.classList.add("added-message");
+        setTimeout(() => {
+            blogMessage.innerHTML = "";
+            blogMessage.classList.remove("added-message");
+            window.location.reload();
+        }, 3000);
+    }
+};
+const setLikeCommentsandViewNumbers = () => {
+    const posts = document.getElementById("blogs-numbers");
+    const comments = document.getElementById("comments-number");
+    const likes = document.getElementById("likes-number");
+    // get blogs from local storage
+    let blogs = JSON.parse(localStorage.getItem("blogs") || "[]");
+    if (posts !== null) {
+        posts.innerHTML = blogs.length.toString();
+    }
+    let allComments = [];
+    for (let i = 0; i < blogs.length; i++) {
+        if (blogs[i].comments.length === 0) {
+            continue;
+        }
+        for (let j = 0; j < blogs[i].comments.length; j++) {
+            allComments.push(blogs[i].comments[j]);
+        }
+    }
+    if (comments !== null)
+        comments.innerHTML = allComments.length.toString();
+    let likesNumber = 0;
+    for (let i = 0; i < blogs.length; i++) {
+        likesNumber += blogs[i].likes;
+    }
+    if (likes !== null)
+        likes.innerHTML = likesNumber.toString();
+};
+setLikeCommentsandViewNumbers();
+const mostLikedPost = () => {
+    // get blogs from local storage
+    let blogs = JSON.parse(localStorage.getItem("blogs") || "[]");
+    const mostLikedDiv = document.querySelector(".recent-blogs-left");
+    const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes);
+    if (blogs.length === 0) {
+        const noBlogs = document.createElement("p");
+        noBlogs.classList.add("no-blog");
+        noBlogs.textContent = "no blogs at the moment";
+        if (mostLikedDiv !== null)
+            mostLikedDiv.appendChild(noBlogs);
+    }
+    else {
+        for (let i = 0; i < sortedBlogs.length; i++) {
+            const likesBlogCard = document.createElement("div");
+            likesBlogCard.classList.add("recent-blog-left-card");
+            const blogTitle = document.createElement("p");
+            blogTitle.innerHTML = sortedBlogs[i].title;
+            const blogLikes = document.createElement("p");
+            blogLikes.innerHTML = sortedBlogs[i].likes.toString();
+            likesBlogCard.appendChild(blogTitle);
+            likesBlogCard.appendChild(blogLikes);
+            if (mostLikedDiv !== null)
+                mostLikedDiv.appendChild(likesBlogCard);
+        }
+    }
+};
+mostLikedPost();

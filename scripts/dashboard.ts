@@ -622,11 +622,10 @@ const makeDeleteCommentModels = () => {
 
           if (continueButton !== null) {
             continueButton.addEventListener("click", () =>
-              //   deleteBlogComment(
-              //     parseInt(allComments[i].blogId, 10),
-              //     allComments[i].id
-              //   )
-              console.log("delete")
+              deleteBlogComment(
+                parseInt(allComments[i].blogId, 10),
+                allComments[i].id
+              )
             );
           }
 
@@ -754,3 +753,228 @@ const saveBlogButton: HTMLElement | null =
   document.getElementById("save-blog-button");
 if (saveBlogButton !== null)
   saveBlogButton.addEventListener("click", saveNewBlog);
+
+//edit blog function
+const editBlog = (blogId: number) => {
+  let blogs: DashboardBlog[] = JSON.parse(
+    localStorage.getItem("blogs") || "[]"
+  );
+  const editBlogform: HTMLFormElement | null = document.forms.namedItem(
+    `edit-blog-form-${blogId}`
+  );
+
+  if (editBlogform !== null) {
+    const titleField = editBlogform["title"] as unknown as HTMLInputElement;
+    const contentField = editBlogform[
+      "content"
+    ] as unknown as HTMLTextAreaElement;
+
+    const poster =
+      editBlogform["poster"].files.length > 0
+        ? (editBlogform["poster"].files[0] as File).name
+        : "default.jpg";
+
+    if (titleField.value.trim() === "") {
+      alert("Please enter a title.");
+      return;
+    }
+
+    if (contentField.value.trim() === "") {
+      alert("Please enter content.");
+      return;
+    }
+
+    //edit blog data with new data
+    const editedBlog = blogs.find((b) => b.id == blogId);
+    if (!editedBlog) {
+      alert("blog not found");
+      return;
+    }
+    if (titleField.value.trim() === "") {
+      alert("Please enter a title.");
+      return;
+    }
+
+    if (contentField.value.trim() === "") {
+      alert("Please enter content.");
+      return;
+    }
+
+    editedBlog.title = titleField.value.trim();
+    editedBlog.poster = poster !== null ? poster : editedBlog.poster;
+    editedBlog.content = contentField.value.trim();
+
+    //update localStorage blogs
+    localStorage.setItem("blogs", JSON.stringify(blogs));
+  }
+
+  //current opened modal
+  const currentOpenedModal: HTMLElement | null = document.getElementById(
+    `edit-blog-modal-${blogId}`
+  );
+
+  if (currentOpenedModal !== null) currentOpenedModal.style.display = "none";
+
+  const blogMessage: HTMLElement | null =
+    document.getElementById("blog-message");
+  if (blogMessage !== null) {
+    blogMessage.innerHTML = "blog edited successfully";
+    blogMessage.classList.add("added-message");
+
+    setTimeout(() => {
+      blogMessage.innerHTML = "";
+      blogMessage.classList.remove("added-message");
+      window.location.reload();
+    }, 3000);
+  }
+};
+
+//delete blog function
+const deleteBlog = (blogId: number) => {
+  let blogs: DashboardBlog[] = JSON.parse(
+    localStorage.getItem("blogs") || "[]"
+  );
+  const index = blogs.findIndex((blog) => blog.id === blogId);
+
+  if (index === -1) {
+    alert("Blog not found");
+    return;
+  }
+  blogs.splice(index, 1)[0];
+
+  localStorage.setItem("blogs", JSON.stringify(blogs));
+
+  //current opened modal
+  const currentOpenedModal: HTMLElement | null = document.getElementById(
+    `delete-blog-modal-${blogId}`
+  );
+  if (currentOpenedModal !== null) currentOpenedModal.style.display = "none";
+
+  const blogMessage: HTMLElement | null =
+    document.getElementById("blog-message");
+  if (blogMessage !== null) {
+    blogMessage.innerHTML = "blog deleted successfully";
+    blogMessage.classList.add("delete-message");
+
+    setTimeout(() => {
+      blogMessage.innerHTML = "";
+      blogMessage.classList.remove("delete-message");
+      window.location.reload();
+    }, 3000);
+  }
+};
+
+//delete blog comment
+const deleteBlogComment = (blogId: number, commentId: number) => {
+  let blogs: DashboardBlog[] = JSON.parse(
+    localStorage.getItem("blogs") || "[]"
+  );
+  const blogIndex = blogs.findIndex((blog) => blog.id === blogId);
+
+  if (blogIndex === -1) {
+    alert("Blog not found");
+    return;
+  }
+
+  const commentIndex = blogs[blogIndex].comments.findIndex(
+    (comment) => comment.id === commentId
+  );
+
+  if (commentIndex === -1) {
+    alert("Comment not found");
+    return;
+  }
+
+  blogs[blogIndex].comments.splice(commentIndex, 1)[0];
+
+  localStorage.setItem("blogs", JSON.stringify(blogs));
+
+  //current opened modal
+  const currentOpenedModal: HTMLElement | null = document.getElementById(
+    `delete-blog-comment-modal-${commentId}`
+  );
+  if (currentOpenedModal !== null) currentOpenedModal.style.display = "none";
+
+  const blogMessage: HTMLElement | null =
+    document.getElementById("blog-message");
+  if (blogMessage !== null) {
+    blogMessage.innerHTML = "comment deleted successfully";
+    blogMessage.classList.add("added-message");
+
+    setTimeout(() => {
+      blogMessage.innerHTML = "";
+      blogMessage.classList.remove("added-message");
+      window.location.reload();
+    }, 3000);
+  }
+};
+
+const setLikeCommentsandViewNumbers = () => {
+  const posts: HTMLElement | null = document.getElementById("blogs-numbers");
+  const comments: HTMLElement | null =
+    document.getElementById("comments-number");
+  const likes: HTMLElement | null = document.getElementById("likes-number");
+
+  // get blogs from local storage
+  let blogs: DashboardBlog[] = JSON.parse(
+    localStorage.getItem("blogs") || "[]"
+  );
+
+  if (posts !== null) {
+    posts.innerHTML = blogs.length.toString();
+  }
+
+  let allComments = [];
+  for (let i = 0; i < blogs.length; i++) {
+    if (blogs[i].comments.length === 0) {
+      continue;
+    }
+    for (let j = 0; j < blogs[i].comments.length; j++) {
+      allComments.push(blogs[i].comments[j]);
+    }
+  }
+
+  if (comments !== null) comments.innerHTML = allComments.length.toString();
+
+  let likesNumber = 0;
+  for (let i = 0; i < blogs.length; i++) {
+    likesNumber += blogs[i].likes;
+  }
+
+  if (likes !== null) likes.innerHTML = likesNumber.toString();
+};
+setLikeCommentsandViewNumbers();
+
+const mostLikedPost = () => {
+  // get blogs from local storage
+  let blogs = JSON.parse(localStorage.getItem("blogs") || "[]");
+  const mostLikedDiv: HTMLElement | null =
+    document.querySelector(".recent-blogs-left");
+
+  const sortedBlogs: DashboardBlog[] = blogs.sort(
+    (a: DashboardBlog, b: DashboardBlog) => b.likes - a.likes
+  );
+
+  if (blogs.length === 0) {
+    const noBlogs: HTMLParagraphElement = document.createElement("p");
+    noBlogs.classList.add("no-blog");
+    noBlogs.textContent = "no blogs at the moment";
+    if (mostLikedDiv !== null) mostLikedDiv.appendChild(noBlogs);
+  } else {
+    for (let i = 0; i < sortedBlogs.length; i++) {
+      const likesBlogCard: HTMLDivElement = document.createElement("div");
+      likesBlogCard.classList.add("recent-blog-left-card");
+      const blogTitle: HTMLParagraphElement = document.createElement("p");
+      blogTitle.innerHTML = sortedBlogs[i].title;
+
+      const blogLikes: HTMLParagraphElement = document.createElement("p");
+      blogLikes.innerHTML = sortedBlogs[i].likes.toString();
+
+      likesBlogCard.appendChild(blogTitle);
+      likesBlogCard.appendChild(blogLikes);
+
+      if (mostLikedDiv !== null) mostLikedDiv.appendChild(likesBlogCard);
+    }
+  }
+};
+mostLikedPost();
