@@ -1,4 +1,23 @@
 "use strict";
+// onscroll navigation bar
+if (document.getElementById("onscroll-navbar")) {
+    window.addEventListener("scroll", () => {
+        const navbar = document.getElementById("onscroll-navbar");
+        if (navbar !== null) {
+            if (window.innerWidth >= 956) {
+                if (window.scrollY > 40) {
+                    navbar.style.display = "flex";
+                }
+                else {
+                    navbar.style.display = "none";
+                }
+            }
+            else {
+                navbar.style.display = "none";
+            }
+        }
+    });
+}
 //age span
 const span = document.getElementById("ageSpan");
 const currentYear = new Date().getFullYear();

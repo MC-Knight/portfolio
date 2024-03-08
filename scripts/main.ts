@@ -1,3 +1,22 @@
+// onscroll navigation bar
+if (document.getElementById("onscroll-navbar")) {
+  window.addEventListener("scroll", () => {
+    const navbar: HTMLElement | null =
+      document.getElementById("onscroll-navbar");
+    if (navbar !== null) {
+      if (window.innerWidth >= 956) {
+        if (window.scrollY > 40) {
+          navbar.style.display = "flex";
+        } else {
+          navbar.style.display = "none";
+        }
+      } else {
+        navbar.style.display = "none";
+      }
+    }
+  });
+}
+
 //age span
 const span: HTMLSpanElement | null = document.getElementById("ageSpan");
 const currentYear: number = new Date().getFullYear();
