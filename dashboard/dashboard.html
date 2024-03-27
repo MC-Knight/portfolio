@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="dashboard.css" />
   </head>
   <body>
+    <p id="dashboard-toast"></p>
     <div class="container">
       <div class="left-side">
         <h1><span>Joseph</span> BT</h1>
@@ -62,7 +63,7 @@
         <h1 class="small-screen"><span>Joseph</span> BT</h1>
         <div class="right-side-welcome">
           <h1>Welcome back! 👋</h1>
-          <a href="../login/login.html">Logout</a>
+          <button type="button" id="logout">Logout</button>
         </div>
 
         <div class="right-side-cards">
@@ -106,7 +107,7 @@
 
       <!-- add blog modal -->
       <div class="modal" id="add-blog-modal">
-        <form name="add-blog-form">
+        <form name="add-blog-form" enctype="multipart/form-data">
           <svg
             width="22"
             height="21"

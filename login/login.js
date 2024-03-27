@@ -73,6 +73,11 @@ const loginHandler = async (e) => {
     if (response.ok) {
       const data = await response.json();
       showToaster(data.message);
+      localStorage.setItem("dauth", data.access);
+      localStorage.setItem("dref", data.refresh);
+      setTimeout(() => {
+        window.location.href = "/dashboard/dashboard.html";
+      }, 3000);
     }
   } catch (error) {
     console.log(error);
@@ -81,3 +86,12 @@ const loginHandler = async (e) => {
 
 const loginBtn = document.getElementById("login");
 loginBtn.addEventListener("click", loginHandler);
+
+const checkUserToken = () => {
+  const token = localStorage.getItem("dauth");
+
+  if (token) {
+    window.location.href = "/dashboard/dashboard.html";
+  }
+};
+checkUserToken();
