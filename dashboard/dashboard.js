@@ -15,6 +15,11 @@ closeAddBlogModel.addEventListener("click", () => {
 
 //display blog
 const displayBlogs = async () => {
+  const recentBlogsRight = document.getElementById("recent-blogs-right");
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader-1");
+  recentBlogsRight.innerHTML = "";
+  recentBlogsRight.appendChild(isLoading);
   // get blogs from api
   const res = await fetch(
     "https://portfolioapi-production-ec62.up.railway.app/api/blogs"
@@ -22,14 +27,14 @@ const displayBlogs = async () => {
   const data = await res.json();
   let blogs = data.blogsWithComments;
 
-  const recentBlogsRight = document.getElementById("recent-blogs-right");
-
   if (blogs.length === 0) {
+    recentBlogsRight.removeChild(isLoading);
     const noBlogs = document.createElement("p");
     noBlogs.classList.add("no-blog");
     noBlogs.textContent = "no blogs at the moment";
     recentBlogsRight.appendChild(noBlogs);
   } else {
+    recentBlogsRight.removeChild(isLoading);
     blogs.forEach((blog) => {
       //create blog card
       const blogCard = document.createElement("div");
@@ -350,7 +355,7 @@ const displayBlogs = async () => {
 
           <div class="delete-modal-buttons">
             <button id="no-delete-blog-modal-${blog._id}">No</button>
-            <button onClick={deleteBlog("${blog._id}")}>Continue</button>
+            <button onClick={deleteBlog("${blog._id}")} id="delete-blog-${blog._id}">Continue</button>
           </div>
         </div>`;
 
@@ -776,14 +781,22 @@ const deleteBlog = async (blogId) => {
     },
   };
 
+  const deleteBlogBtn = document.getElementById(`delete-blog-${blogId}`);
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader");
+  deleteBlogBtn.innerHTML = "";
+  deleteBlogBtn.appendChild(isLoading);
+
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
+      deleteBlogBtn.innerHTML = "Continue";
       const resError = await response.json();
       showToaster(resError.error, 5000);
     }
 
     if (response.ok) {
+      deleteBlogBtn.innerHTML = "Continue";
       const data = await response.json();
       //current opened modal
       const currentOpenedModal = document.getElementById(
@@ -802,6 +815,7 @@ const deleteBlog = async (blogId) => {
       }, 3000);
     }
   } catch (error) {
+    deleteBlogBtn.innerHTML = "Continue";
     console.log(error);
   }
 };
@@ -819,14 +833,24 @@ const deleteBlogComment = async (commentId) => {
     },
   };
 
+  const deleteBlogCommentBtn = document.getElementById(
+    `continue-delete-blog-comment-${commentId}`
+  );
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader");
+  deleteBlogCommentBtn.innerHTML = "";
+  deleteBlogCommentBtn.appendChild(isLoading);
+
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
+      deleteBlogCommentBtn.innerHTML = "Continue";
       const resError = await response.json();
       showToaster(resError.error, 5000);
     }
 
     if (response.ok) {
+      deleteBlogCommentBtn.innerHTML = "Continue";
       const data = await response.json();
       //current opened modal
       const currentOpenedModal = document.getElementById(
@@ -845,6 +869,7 @@ const deleteBlogComment = async (commentId) => {
       }, 3000);
     }
   } catch (error) {
+    deleteBlogCommentBtn.innerHTML = "Continue";
     console.log(error);
   }
 };
@@ -854,6 +879,26 @@ const setLikeCommentsandViewNumbers = async () => {
   const comments = document.getElementById("comments-number");
   const likes = document.getElementById("likes-number");
 
+  //isLoading
+  const isLoadingPosts = document.createElement("div");
+  isLoadingPosts.classList.add("loader-1");
+
+  const isLoadingComments = document.createElement("div");
+  isLoadingComments.classList.add("loader-1");
+
+  const isLoadingLikes = document.createElement("div");
+  isLoadingLikes.classList.add("loader-1");
+
+  //posts
+  posts.innerHTML = "";
+  posts.appendChild(isLoadingPosts);
+  //comments
+  comments.innerHTML = "";
+  comments.appendChild(isLoadingComments);
+  //likes
+  likes.innerHTML = "";
+  likes.appendChild(isLoadingLikes);
+
   // get blogs from api
   const res = await fetch(
     "https://portfolioapi-production-ec62.up.railway.app/api/blogs"
@@ -861,6 +906,7 @@ const setLikeCommentsandViewNumbers = async () => {
   const data = await res.json();
   let blogs = data.blogsWithComments;
 
+  posts.removeChild(isLoadingPosts);
   posts.innerHTML = blogs.length;
 
   let allComments = [];
@@ -873,6 +919,7 @@ const setLikeCommentsandViewNumbers = async () => {
     }
   }
 
+  comments.removeChild(isLoadingComments);
   comments.innerHTML = allComments.length;
 
   let likesNumber = 0;
@@ -880,11 +927,17 @@ const setLikeCommentsandViewNumbers = async () => {
     likesNumber += blogs[i].likes;
   }
 
+  likes.removeChild(isLoadingLikes);
   likes.innerHTML = likesNumber;
 };
 setLikeCommentsandViewNumbers();
 
 const mostLikedPost = async () => {
+  const mostLikedDiv = document.querySelector(".recent-blogs-left");
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader-1");
+  mostLikedDiv.innerHTML = "";
+  mostLikedDiv.appendChild(isLoading);
   // get blogs from api
   const res = await fetch(
     "https://portfolioapi-production-ec62.up.railway.app/api/blogs"
@@ -892,16 +945,16 @@ const mostLikedPost = async () => {
   const data = await res.json();
   let blogs = data.blogsWithComments;
 
-  const mostLikedDiv = document.querySelector(".recent-blogs-left");
-
   const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes);
 
   if (blogs.length === 0) {
+    mostLikedDiv.removeChild(isLoading);
     const noBlogs = document.createElement("p");
     noBlogs.classList.add("no-blog");
     noBlogs.textContent = "no blogs at the moment";
     mostLikedDiv.appendChild(noBlogs);
   } else {
+    mostLikedDiv.removeChild(isLoading);
     for (let i = 0; i < sortedBlogs.length; i++) {
       const likesBlogCard = document.createElement("div");
       likesBlogCard.classList.add("recent-blog-left-card");
@@ -930,6 +983,8 @@ function showToaster(message, seconds = 3000) {
     toastP.classList.remove("dashboard-toast");
   }, seconds);
 }
+
+const logoutButton = document.getElementById("logout");
 const logoutHandler = async () => {
   const data = {
     token: localStorage.getItem("dref"),
@@ -945,9 +1000,15 @@ const logoutHandler = async () => {
     body: JSON.stringify(data),
   };
 
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader-1");
+  logoutButton.innerHTML = "";
+  logoutButton.appendChild(isLoading);
+
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
+      logoutButton.innerHTML = "Logout";
       const resError = await response.json();
       localStorage.removeItem("dauth");
       localStorage.removeItem("dref");
@@ -955,6 +1016,7 @@ const logoutHandler = async () => {
     }
 
     if (response.ok) {
+      logoutButton.innerHTML = "Logout";
       const data = await response.json();
       showToaster(data.message);
       localStorage.removeItem("dauth");
@@ -965,10 +1027,11 @@ const logoutHandler = async () => {
       }, 3000);
     }
   } catch (error) {
+    logoutButton.innerHTML = "Logout";
     console.log(error);
   }
 };
-const logoutButton = document.getElementById("logout");
+
 logoutButton.addEventListener("click", logoutHandler);
 
 const checkUser = () => {

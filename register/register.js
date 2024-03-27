@@ -123,3 +123,12 @@ const registerHandler = async (e) => {
 };
 
 registerBtn.addEventListener("click", registerHandler);
+
+const checkUserToken = () => {
+  const token = localStorage.getItem("dauth");
+
+  if (token) {
+    window.location.href = "/dashboard/dashboard.html";
+  }
+};
+checkUserToken();
