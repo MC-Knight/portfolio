@@ -296,7 +296,7 @@ const displayBlogs = async () => {
           </div>
         </div>
     
-        <button type="button" onClick={editBlog(${blog._id})}>edit blog</button>
+        <button type="button" onClick={editBlog("${blog._id}")} id="edit-blog-btn-${blog._id}">edit blog</button>
       </form>`;
 
       const openEditBlogButton = document.getElementById(
@@ -718,54 +718,88 @@ const saveNewBlog = async () => {
 saveBlogButton.addEventListener("click", saveNewBlog);
 
 //edit blog function
-const editBlog = (blogId) => {
-  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+const editBlog = async (blogId) => {
   const form = document.forms[`edit-blog-form-${blogId}`];
 
   //get form values
   const title = form["title"].value;
-  const poster =
-    form["poster"].files.length > 0 ? form["poster"].files[0].name : null;
   const content = form["content"].value;
-
-  //edit blog data with new data
-  const editedBlog = blogs.find((b) => b.id == blogId);
-  if (!editedBlog) {
-    alert("blog not found");
-    return;
-  }
-
-  if (!title || title == null || title == "") {
+  if (!title || title.trim() === "") {
     alert("Please enter a title.");
     return;
   }
 
-  if (!content || content == null || content == "") {
+  if (!content || content.trim() === "") {
     alert("Please enter content.");
     return;
   }
-  editedBlog.title = title;
-  editedBlog.poster = poster !== null ? poster : editedBlog.poster;
-  editedBlog.content = content;
 
-  //update localStorage blogs
-  localStorage.setItem("blogs", JSON.stringify(blogs));
+  const blogData = {
+    title,
+    content,
+  };
 
-  //current opened modal
-  const currentOpenedModal = document.getElementById(
-    `edit-blog-modal-${blogId}`
-  );
-  currentOpenedModal.style.display = "none";
+  const token = localStorage.getItem("dauth");
+  const url = `https://portfolioapi-production-ec62.up.railway.app/api/blogs/${blogId}`;
 
-  const blogMessage = document.getElementById("blog-message");
-  blogMessage.innerHTML = "blog edited successfully";
-  blogMessage.classList.add("added-message");
+  const options = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(blogData),
+  };
 
-  setTimeout(() => {
-    blogMessage.innerHTML = "";
-    blogMessage.classList.remove("added-message");
-    window.location.reload();
-  }, 3000);
+  const editBlogBtn = document.getElementById(`edit-blog-btn-${blogId}`);
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader");
+  editBlogBtn.innerHTML = "";
+  editBlogBtn.appendChild(isLoading);
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      editBlogBtn.innerHTML = "edit blog";
+      const resError = await response.json();
+      showToaster(resError.error, 5000);
+    }
+
+    if (!response.ok && response.status === 403) {
+      saveBlogButton.innerHTML = "edit blog";
+      const resError = await response.json();
+      showToaster(resError.error, 2000);
+      localStorage.removeItem("dauth");
+      localStorage.removeItem("dref");
+      setTimeout(() => {
+        window.location.href = "login/login.html";
+      }, 2000);
+    }
+
+    if (response.ok) {
+      editBlogBtn.innerHTML = "edit blog";
+      const data = await response.json();
+
+      //current opened modal
+      const currentOpenedModal = document.getElementById(
+        `edit-blog-modal-${blogId}`
+      );
+      currentOpenedModal.style.display = "none";
+
+      const blogMessage = document.getElementById("blog-message");
+      blogMessage.innerHTML = data.message;
+      blogMessage.classList.add("added-message");
+
+      setTimeout(() => {
+        blogMessage.innerHTML = "";
+        blogMessage.classList.remove("added-message");
+        window.location.reload();
+      }, 3000);
+    }
+  } catch (error) {
+    editBlogBtn.innerHTML = "edit blog";
+    console.log(error);
+  }
 };
 
 //delete blog function
