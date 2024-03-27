@@ -622,6 +622,7 @@ const makeDeleteCommentModels = () => {
 makeDeleteCommentModels();
 
 //save blog function
+const saveBlogButton = document.getElementById("save-blog-button");
 const saveNewBlog = async () => {
   const form = document.forms["add-blog-form"];
 
@@ -662,14 +663,21 @@ const saveNewBlog = async () => {
     body: formData,
   };
 
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader");
+  saveBlogButton.innerHTML = "";
+  saveBlogButton.appendChild(isLoading);
+
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
+      saveBlogButton.innerHTML = "save blog";
       const resError = await response.json();
       showToaster(resError.error, 5000);
     }
 
     if (!response.ok && response.status === 403) {
+      saveBlogButton.innerHTML = "save blog";
       const resError = await response.json();
       showToaster(resError.error, 2000);
       localStorage.removeItem("dauth");
@@ -680,6 +688,7 @@ const saveNewBlog = async () => {
     }
 
     if (response.ok) {
+      saveBlogButton.innerHTML = "save blog";
       const data = await response.json();
       //close modal
       blogModal.style.display = "none";
@@ -696,11 +705,11 @@ const saveNewBlog = async () => {
       }, 3000);
     }
   } catch (error) {
+    saveBlogButton.innerHTML = "save blog";
     console.log(error);
   }
 };
 
-const saveBlogButton = document.getElementById("save-blog-button");
 saveBlogButton.addEventListener("click", saveNewBlog);
 
 //edit blog function

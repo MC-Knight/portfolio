@@ -78,6 +78,7 @@ async function ValidateForm() {
   });
 }
 
+const registerBtn = document.getElementById("register");
 const registerHandler = async (e) => {
   e.preventDefault();
   const data = await ValidateForm();
@@ -95,14 +96,20 @@ const registerHandler = async (e) => {
     body: JSON.stringify(data),
   };
 
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader");
+  registerBtn.innerHTML = "";
+  registerBtn.appendChild(isLoading);
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
+      registerBtn.innerHTML = "Login";
       const resError = await response.json();
       showToaster(resError.error, 5000);
     }
 
     if (response.ok) {
+      registerBtn.innerHTML = "Login";
       const data = await response.json();
       showToaster(data.message);
       setTimeout(() => {
@@ -110,9 +117,9 @@ const registerHandler = async (e) => {
       }, 3000);
     }
   } catch (error) {
+    registerBtn.innerHTML = "Login";
     console.log(error);
   }
 };
 
-const registerBtn = document.getElementById("register");
 registerBtn.addEventListener("click", registerHandler);

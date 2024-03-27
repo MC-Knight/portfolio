@@ -46,6 +46,8 @@ async function ValidateForm() {
   });
 }
 
+const loginBtn = document.getElementById("login");
+
 const loginHandler = async (e) => {
   e.preventDefault();
   const data = await ValidateForm();
@@ -63,14 +65,21 @@ const loginHandler = async (e) => {
     body: JSON.stringify(data),
   };
 
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader");
+  loginBtn.innerHTML = "";
+  loginBtn.appendChild(isLoading);
+
   try {
     const response = await fetch(url, options);
     if (!response.ok) {
+      loginBtn.innerHTML = "Login";
       const resError = await response.json();
       showToaster(resError.error, 5000);
     }
 
     if (response.ok) {
+      loginBtn.innerHTML = "Login";
       const data = await response.json();
       showToaster(data.message);
       localStorage.setItem("dauth", data.access);
@@ -80,11 +89,11 @@ const loginHandler = async (e) => {
       }, 3000);
     }
   } catch (error) {
+    loginBtn.innerHTML = "Login";
     console.log(error);
   }
 };
 
-const loginBtn = document.getElementById("login");
 loginBtn.addEventListener("click", loginHandler);
 
 const checkUserToken = () => {
