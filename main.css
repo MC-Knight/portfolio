@@ -554,6 +554,10 @@ body {
   font-size: 20px;
   font-style: normal;
   padding: 10px 20px;
+  width: 90%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .blog-text {
@@ -777,119 +781,6 @@ body {
   }
 }
 
-/* login start */
-.login {
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-.login-nav {
-  width: 100%;
-  height: 10vh;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  padding: 0 2%;
-}
-
-.login-nav a {
-  color: var(--main-color);
-  text-decoration: none;
-}
-
-.login-nav h1 {
-  font-weight: 400;
-}
-
-.login-nav h1 span {
-  font-size: 30px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-
-.login-form {
-  width: 100%;
-  height: 90vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.login-form form {
-  min-width: 500px;
-  min-height: 400px;
-  height: auto;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  flex-direction: column;
-  padding: 15px 5%;
-}
-
-.login-form form h3 {
-  color: var(--main-color);
-  font-weight: 500;
-  font-style: bold;
-}
-
-.input-div-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: flex-start;
-  gap: 10px;
-}
-.input-div-container p {
-  color: var(--main-color);
-  font-size: 15px;
-  font-weight: 400;
-}
-.input-div {
-  width: 100%;
-  height: 50px;
-  border-radius: 5px;
-  background: #ffffff;
-  border: 1.5px solid rgba(51, 56, 60, 0.3);
-  padding: 5px 10px;
-}
-
-.input-div input {
-  width: 100%;
-  height: 100%;
-  outline: none;
-  border: none;
-  padding-left: 10px;
-}
-
-.input-div input[placeholder] {
-  color: rgba(51, 56, 60, 0.3);
-  font-weight: 400;
-  font-size: 15px;
-}
-
-.login-form form button {
-  width: 100%;
-  height: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--white-color);
-  border: 1px solid var(--main-color);
-  background: var(--main-color);
-  border-radius: 5px;
-  font-weight: 500;
-  font-style: bold;
-  font-size: 15px;
-  cursor: pointer;
-}
-/* login end */
-
 @media screen and (max-width: 586px) {
   .onscroll-navbar {
     display: none;
@@ -1019,18 +910,6 @@ body {
   .btn {
     width: 100%;
   }
-
-  /* login start */
-  .login-nav {
-    padding: 0 5%;
-  }
-
-  .login-form form {
-    min-width: 350px;
-    min-height: 400px;
-  }
-
-  /* login end */
 
   /* blog start */
 

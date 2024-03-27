@@ -74,15 +74,42 @@ function closeMenu() {
   menu.style.right = "-200px";
 }
 
-// ensure not to reset current blogs localStorage state
-if (!localStorage.getItem("blogs")) {
-  localStorage.setItem("blogs", JSON.stringify([]));
+function formatDate(dateString) {
+  const date = new Date(dateString);
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  const monthIndex = date.getMonth();
+  const day = date.getDate();
+  const year = date.getFullYear();
+
+  const formattedDate = `${months[monthIndex]} ${
+    day < 10 ? "0" : ""
+  }${day}, ${year}`;
+
+  return formattedDate;
 }
 
 // load last two blogs
-const loadLastTwoBlogs = () => {
-  // get blogs from local storage
-  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+const loadLastTwoBlogs = async () => {
+  // get blogs from api
+  const res = await fetch(
+    "https://portfolioapi-production-ec62.up.railway.app/api/blogs"
+  );
+  const data = await res.json();
+  let blogs = data.blogsWithComments;
 
   const blogContainer = document.querySelector(".blog-container");
 
@@ -120,8 +147,8 @@ const loadLastTwoBlogs = () => {
     </svg>`;
 
       blogCard.innerHTML = `
-      <img src="../posters/${lastTwoBlogs[i].poster}" alt="" />
-      <p class="blog-date">${lastTwoBlogs[i].date}</p>
+      <img src="${lastTwoBlogs[i].poster}" alt="" />
+      <p class="blog-date">${formatDate(lastTwoBlogs[i].date)}</p>
       <p class="blog-title">${lastTwoBlogs[i].title}</p>
       <p class="blog-text">
         ${lastTwoBlogs[i].content.split(" ").slice(0, 5).join(" ")} ...
@@ -130,7 +157,7 @@ const loadLastTwoBlogs = () => {
       <div class="blog-buttons">
         <div class="blog-like">
           <div>
-            ${lastTwoBlogs[i].isLiked ? likedHeart : notLikedHeart}
+            ${notLikedHeart}
             ${lastTwoBlogs[i].likes}
           </div>
           <div>
@@ -161,7 +188,7 @@ const loadLastTwoBlogs = () => {
             ${lastTwoBlogs[i].views}
           </div>
         </div>
-        <a href="blog/blog.html?id=${lastTwoBlogs[i].id}">
+        <a href="blog/blog.html?id=${lastTwoBlogs[i]._id}">
           Read More
           <svg
             width="16"
