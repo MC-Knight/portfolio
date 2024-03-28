@@ -14,17 +14,27 @@ closeAddBlogModel.addEventListener("click", () => {
 });
 
 //display blog
-const displayBlogs = () => {
-  // get blogs from local storage
-  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+const displayBlogs = async () => {
   const recentBlogsRight = document.getElementById("recent-blogs-right");
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader-1");
+  recentBlogsRight.innerHTML = "";
+  recentBlogsRight.appendChild(isLoading);
+  // get blogs from api
+  const res = await fetch(
+    "https://portfolioapi-production-ec62.up.railway.app/api/blogs"
+  );
+  const data = await res.json();
+  let blogs = data.blogsWithComments;
 
   if (blogs.length === 0) {
+    recentBlogsRight.removeChild(isLoading);
     const noBlogs = document.createElement("p");
     noBlogs.classList.add("no-blog");
     noBlogs.textContent = "no blogs at the moment";
     recentBlogsRight.appendChild(noBlogs);
   } else {
+    recentBlogsRight.removeChild(isLoading);
     blogs.forEach((blog) => {
       //create blog card
       const blogCard = document.createElement("div");
@@ -32,7 +42,7 @@ const displayBlogs = () => {
 
       // create blog image poster
       const img = document.createElement("img");
-      img.src = `../posters/${blog.poster}`;
+      img.src = `${blog.poster}`;
       img.alt = blog.id;
 
       // create div element for blog details
@@ -100,7 +110,7 @@ const displayBlogs = () => {
 
       // create comment button
       const commentsButton = document.createElement("button");
-      commentsButton.id = `open-comments-blog-model-${blog.id}`;
+      commentsButton.id = `open-comments-blog-model-${blog._id}`;
       commentsButton.innerHTML = `   
         <svg
           width="17"
@@ -134,7 +144,7 @@ const displayBlogs = () => {
 
       // create edit button
       const editButton = document.createElement("button");
-      editButton.id = `open-edit-blog-model-${blog.id}`;
+      editButton.id = `open-edit-blog-model-${blog._id}`;
       editButton.innerHTML = `  
         <svg
           width="15"
@@ -173,7 +183,7 @@ const displayBlogs = () => {
 
       // create delete button
       const deleteButton = document.createElement("button");
-      deleteButton.id = `open-delete-blog-model-${blog.id}`;
+      deleteButton.id = `open-delete-blog-model-${blog._id}`;
       deleteButton.innerHTML = ` 
         <svg
           width="15"
@@ -223,10 +233,10 @@ const displayBlogs = () => {
       //create div for edit modal
       const editModal = document.createElement("div");
       editModal.classList.add("modal");
-      editModal.id = `edit-blog-modal-${blog.id}`;
+      editModal.id = `edit-blog-modal-${blog._id}`;
 
       editModal.innerHTML = `  
-        <form name="edit-blog-form-${blog.id}">
+        <form name="edit-blog-form-${blog._id}">
         <svg
           width="22"
           height="21"
@@ -234,7 +244,7 @@ const displayBlogs = () => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
           class="close-modal"
-          data-close-id="close-edit-blog-modal-${blog.id}"
+          data-close-id="close-edit-blog-modal-${blog._id}"
         >
           <path
             d="M15.972 5.29102L5.54956 15.7134"
@@ -286,14 +296,14 @@ const displayBlogs = () => {
           </div>
         </div>
     
-        <button type="button" onClick={editBlog(${blog.id})}>edit blog</button>
+        <button type="button" onClick={editBlog("${blog._id}")} id="edit-blog-btn-${blog._id}">edit blog</button>
       </form>`;
 
       const openEditBlogButton = document.getElementById(
-        `open-edit-blog-model-${blog.id}`
+        `open-edit-blog-model-${blog._id}`
       );
       const closeEditBlogButton = editModal.querySelector(
-        `[data-close-id="close-edit-blog-modal-${blog.id}"]`
+        `[data-close-id="close-edit-blog-modal-${blog._id}"]`
       );
 
       openEditBlogButton.addEventListener("click", () => {
@@ -308,7 +318,7 @@ const displayBlogs = () => {
       //create div for delete modal
       const deleteModal = document.createElement("div");
       deleteModal.classList.add("modal");
-      deleteModal.id = `delete-blog-modal-${blog.id}`;
+      deleteModal.id = `delete-blog-modal-${blog._id}`;
 
       deleteModal.innerHTML = `
         <div class="delete-modal">
@@ -319,7 +329,7 @@ const displayBlogs = () => {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             class="close-modal"
-            id="close-delete-blog-modal-${blog.id}"
+            id="close-delete-blog-modal-${blog._id}"
           >
             <path
               d="M15.972 5.29102L5.54956 15.7134"
@@ -344,8 +354,8 @@ const displayBlogs = () => {
           </div>
 
           <div class="delete-modal-buttons">
-            <button id="no-delete-blog-modal-${blog.id}">No</button>
-            <button onClick={deleteBlog(${blog.id})}>Continue</button>
+            <button id="no-delete-blog-modal-${blog._id}">No</button>
+            <button onClick={deleteBlog("${blog._id}")} id="delete-blog-${blog._id}">Continue</button>
           </div>
         </div>`;
 
@@ -353,13 +363,13 @@ const displayBlogs = () => {
 
       // open and close delete blog model
       const openDeleteBlogModel = document.getElementById(
-        `open-delete-blog-model-${blog.id}`
+        `open-delete-blog-model-${blog._id}`
       );
       const closeDeleteBlogModel = document.getElementById(
-        `close-delete-blog-modal-${blog.id}`
+        `close-delete-blog-modal-${blog._id}`
       );
       const noDeleteBlogModel = document.getElementById(
-        `no-delete-blog-modal-${blog.id}`
+        `no-delete-blog-modal-${blog._id}`
       );
 
       openDeleteBlogModel.addEventListener("click", () => {
@@ -377,7 +387,7 @@ const displayBlogs = () => {
       //create div for comments modal
       const commentModal = document.createElement("div");
       commentModal.classList.add("modal");
-      commentModal.id = `comments-blog-modal-${blog.id}`;
+      commentModal.id = `comments-blog-modal-${blog._id}`;
 
       const commentsDiv = document.createElement("div");
       commentsDiv.classList.add("comments-modal");
@@ -391,7 +401,7 @@ const displayBlogs = () => {
             viewBox="0 0 22 21"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            data-close-id="close-comments-blog-modal-${blog.id}"
+            data-close-id="close-comments-blog-modal-${blog._id}"
           >
             <path
               d="M15.972 5.29102L5.54956 15.7134"
@@ -432,7 +442,7 @@ const displayBlogs = () => {
           deleteButtonDiv.classList.add("comment-delete");
 
           const deleteButton = document.createElement("button");
-          deleteButton.id = `open-delete-blog-comment-model-${blogComment.id}`;
+          deleteButton.id = `open-delete-blog-comment-model-${blogComment._id}`;
           deleteButton.innerHTML = `
           <svg
             width="15"
@@ -472,10 +482,10 @@ const displayBlogs = () => {
       // open and close comment blog model
 
       const openCommentBlogModel = document.getElementById(
-        `open-comments-blog-model-${blog.id}`
+        `open-comments-blog-model-${blog._id}`
       );
       const closeCommentBlogModel = document.querySelector(
-        `[data-close-id="close-comments-blog-modal-${blog.id}"]`
+        `[data-close-id="close-comments-blog-modal-${blog._id}"]`
       );
 
       openCommentBlogModel.addEventListener("click", () => {
@@ -494,10 +504,14 @@ displayBlogs();
 const makeDeleteCommentModels = () => {
   //create div for delete comment modal
   const populateComments = () => {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       try {
-        // get blogs from local storage
-        let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+        // get blogs from api
+        const res = await fetch(
+          "https://portfolioapi-production-ec62.up.railway.app/api/blogs"
+        );
+        const data = await res.json();
+        let blogs = data.blogsWithComments;
 
         let allComments = [];
         for (let i = 0; i < blogs.length; i++) {
@@ -523,7 +537,7 @@ const makeDeleteCommentModels = () => {
         for (let i = 0; i < allComments.length; i++) {
           const deleteCommentModal = document.createElement("div");
           deleteCommentModal.classList.add("modal");
-          deleteCommentModal.id = `delete-blog-comment-modal-${allComments[i].id}`;
+          deleteCommentModal.id = `delete-blog-comment-modal-${allComments[i]._id}`;
 
           deleteCommentModal.innerHTML = `
           <div class="delete-modal">
@@ -534,7 +548,7 @@ const makeDeleteCommentModels = () => {
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
               class="close-modal"
-              data-close-id="close-delete-blog-comment-modal-${allComments[i].id}"
+              data-close-id="close-delete-blog-comment-modal-${allComments[i]._id}"
             >
               <path
                 d="M15.972 5.29102L5.54956 15.7134"
@@ -559,8 +573,8 @@ const makeDeleteCommentModels = () => {
             </div>
     
             <div class="delete-modal-buttons">
-              <button data-close-id="no-delete-blog-comment-modal-${allComments[i].id}">No</button>
-              <button id="continue-delete-blog-comment-${allComments[i].id}">Continue</button>
+              <button data-close-id="no-delete-blog-comment-modal-${allComments[i]._id}">No</button>
+              <button id="continue-delete-blog-comment-${allComments[i]._id}">Continue</button>
             </div>
           </div>`;
 
@@ -568,34 +582,31 @@ const makeDeleteCommentModels = () => {
 
           // Add event listener to the continue button
           const continueButton = document.getElementById(
-            `continue-delete-blog-comment-${allComments[i].id}`
+            `continue-delete-blog-comment-${allComments[i]._id}`
           );
           continueButton.addEventListener("click", () =>
-            deleteBlogComment(
-              parseInt(allComments[i].blogId, 10),
-              allComments[i].id
-            )
+            deleteBlogComment(allComments[i]._id)
           );
 
           //open and close comment delete blog model
           const openDeleteBlogCommentModel = document.getElementById(
-            `open-delete-blog-comment-model-${allComments[i].id}`
+            `open-delete-blog-comment-model-${allComments[i]._id}`
           );
 
           openDeleteBlogCommentModel.addEventListener("click", () => {
             document.getElementById(
-              `comments-blog-modal-${allComments[i].blogId}`
+              `comments-blog-modal-${allComments[i].blog}`
             ).style.display = "none";
 
             deleteCommentModal.style.display = "flex";
           });
 
           const closeDeleteBlogCommentModel = document.querySelector(
-            `[data-close-id="close-delete-blog-comment-modal-${allComments[i].id}"]`
+            `[data-close-id="close-delete-blog-comment-modal-${allComments[i]._id}"]`
           );
 
           const noDeleteBlogCommentModel = document.querySelector(
-            `[data-close-id="no-delete-blog-comment-modal-${allComments[i].id}"]`
+            `[data-close-id="no-delete-blog-comment-modal-${allComments[i]._id}"]`
           );
 
           closeDeleteBlogCommentModel.addEventListener("click", () => {
@@ -616,199 +627,320 @@ const makeDeleteCommentModels = () => {
 makeDeleteCommentModels();
 
 //save blog function
-const saveNewBlog = () => {
-  // get blogs from local storage
-  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+const saveBlogButton = document.getElementById("save-blog-button");
+const saveNewBlog = async () => {
   const form = document.forms["add-blog-form"];
 
   //get form values
   const title = form["title"].value;
   const poster =
-    form["poster"].files.length > 0
-      ? form["poster"].files[0].name
-      : "default.jpg";
+    form["poster"].files.length > 0 ? form["poster"].files[0] : null;
   const content = form["content"].value;
 
-  if (!title || title == null || title == "") {
+  if (!title || title.trim() === "") {
     alert("Please enter a title.");
     return;
   }
 
-  if (!content || content == null || content == "") {
+  if (!content || content.trim() === "") {
     alert("Please enter content.");
     return;
   }
 
-  //add new blog to blogs array
-  const newBlog = {
-    id: blogs.length + 1,
-    title: title,
-    poster: poster,
-    content: content,
-    date: new Date().toLocaleDateString("en-US", {
-      month: "long",
-      day: "2-digit",
-      year: "numeric",
-    }),
-    comments: [],
-    views: 0,
-    likes: 0,
-    isLiked: false,
-    isViewed: false,
+  if (!poster) {
+    alert("Please choose a poster.");
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append("title", title);
+  formData.append("image", poster);
+  formData.append("content", content);
+
+  const token = localStorage.getItem("dauth");
+  const url = `https://portfolioapi-production-ec62.up.railway.app/api/blogs`;
+
+  const options = {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+    body: formData,
   };
 
-  blogs.push(newBlog);
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader");
+  saveBlogButton.innerHTML = "";
+  saveBlogButton.appendChild(isLoading);
 
-  //update localStorage blogs
-  localStorage.setItem("blogs", JSON.stringify(blogs));
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      saveBlogButton.innerHTML = "save blog";
+      const resError = await response.json();
+      showToaster(resError.error, 5000);
+    }
 
-  //close modal
-  blogModal.style.display = "none";
+    if (!response.ok && response.status === 403) {
+      saveBlogButton.innerHTML = "save blog";
+      const resError = await response.json();
+      showToaster(resError.error, 2000);
+      localStorage.removeItem("dauth");
+      localStorage.removeItem("dref");
+      setTimeout(() => {
+        window.location.href = "login/login.html";
+      }, 2000);
+    }
 
-  // window.location.reload();
-  const blogMessage = document.getElementById("blog-message");
-  blogMessage.innerHTML = "blog added successfully";
-  blogMessage.classList.add("added-message");
+    if (response.ok) {
+      saveBlogButton.innerHTML = "save blog";
+      const data = await response.json();
+      //close modal
+      blogModal.style.display = "none";
 
-  setTimeout(() => {
-    blogMessage.innerHTML = "";
-    blogMessage.classList.remove("added-message");
-    window.location.reload();
-  }, 3000);
+      // window.location.reload();
+      const blogMessage = document.getElementById("blog-message");
+      blogMessage.innerHTML = data.message;
+      blogMessage.classList.add("added-message");
+
+      setTimeout(() => {
+        blogMessage.innerHTML = "";
+        blogMessage.classList.remove("added-message");
+        window.location.reload();
+      }, 3000);
+    }
+  } catch (error) {
+    saveBlogButton.innerHTML = "save blog";
+    console.log(error);
+  }
 };
 
-const saveBlogButton = document.getElementById("save-blog-button");
 saveBlogButton.addEventListener("click", saveNewBlog);
 
 //edit blog function
-const editBlog = (blogId) => {
-  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+const editBlog = async (blogId) => {
   const form = document.forms[`edit-blog-form-${blogId}`];
 
   //get form values
   const title = form["title"].value;
-  const poster =
-    form["poster"].files.length > 0 ? form["poster"].files[0].name : null;
   const content = form["content"].value;
-
-  //edit blog data with new data
-  const editedBlog = blogs.find((b) => b.id == blogId);
-  if (!editedBlog) {
-    alert("blog not found");
-    return;
-  }
-
-  if (!title || title == null || title == "") {
+  if (!title || title.trim() === "") {
     alert("Please enter a title.");
     return;
   }
 
-  if (!content || content == null || content == "") {
+  if (!content || content.trim() === "") {
     alert("Please enter content.");
     return;
   }
-  editedBlog.title = title;
-  editedBlog.poster = poster !== null ? poster : editedBlog.poster;
-  editedBlog.content = content;
 
-  //update localStorage blogs
-  localStorage.setItem("blogs", JSON.stringify(blogs));
+  const blogData = {
+    title,
+    content,
+  };
 
-  //current opened modal
-  const currentOpenedModal = document.getElementById(
-    `edit-blog-modal-${blogId}`
-  );
-  currentOpenedModal.style.display = "none";
+  const token = localStorage.getItem("dauth");
+  const url = `https://portfolioapi-production-ec62.up.railway.app/api/blogs/${blogId}`;
 
-  const blogMessage = document.getElementById("blog-message");
-  blogMessage.innerHTML = "blog edited successfully";
-  blogMessage.classList.add("added-message");
+  const options = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(blogData),
+  };
 
-  setTimeout(() => {
-    blogMessage.innerHTML = "";
-    blogMessage.classList.remove("added-message");
-    window.location.reload();
-  }, 3000);
+  const editBlogBtn = document.getElementById(`edit-blog-btn-${blogId}`);
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader");
+  editBlogBtn.innerHTML = "";
+  editBlogBtn.appendChild(isLoading);
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      editBlogBtn.innerHTML = "edit blog";
+      const resError = await response.json();
+      showToaster(resError.error, 5000);
+    }
+
+    if (!response.ok && response.status === 403) {
+      saveBlogButton.innerHTML = "edit blog";
+      const resError = await response.json();
+      showToaster(resError.error, 2000);
+      localStorage.removeItem("dauth");
+      localStorage.removeItem("dref");
+      setTimeout(() => {
+        window.location.href = "login/login.html";
+      }, 2000);
+    }
+
+    if (response.ok) {
+      editBlogBtn.innerHTML = "edit blog";
+      const data = await response.json();
+
+      //current opened modal
+      const currentOpenedModal = document.getElementById(
+        `edit-blog-modal-${blogId}`
+      );
+      currentOpenedModal.style.display = "none";
+
+      const blogMessage = document.getElementById("blog-message");
+      blogMessage.innerHTML = data.message;
+      blogMessage.classList.add("added-message");
+
+      setTimeout(() => {
+        blogMessage.innerHTML = "";
+        blogMessage.classList.remove("added-message");
+        window.location.reload();
+      }, 3000);
+    }
+  } catch (error) {
+    editBlogBtn.innerHTML = "edit blog";
+    console.log(error);
+  }
 };
 
 //delete blog function
-const deleteBlog = (blogId) => {
-  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
-  const index = blogs.findIndex((blog) => blog.id === blogId);
+const deleteBlog = async (blogId) => {
+  const token = localStorage.getItem("dauth");
+  const url = `https://portfolioapi-production-ec62.up.railway.app/api/blogs/${blogId}`;
 
-  if (index === -1) {
-    alert("Blog not found");
-    return;
+  const options = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
+
+  const deleteBlogBtn = document.getElementById(`delete-blog-${blogId}`);
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader");
+  deleteBlogBtn.innerHTML = "";
+  deleteBlogBtn.appendChild(isLoading);
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      deleteBlogBtn.innerHTML = "Continue";
+      const resError = await response.json();
+      showToaster(resError.error, 5000);
+    }
+
+    if (response.ok) {
+      deleteBlogBtn.innerHTML = "Continue";
+      const data = await response.json();
+      //current opened modal
+      const currentOpenedModal = document.getElementById(
+        `delete-blog-modal-${blogId}`
+      );
+      currentOpenedModal.style.display = "none";
+
+      const blogMessage = document.getElementById("blog-message");
+      blogMessage.innerHTML = data.message;
+      blogMessage.classList.add("delete-message");
+
+      setTimeout(() => {
+        blogMessage.innerHTML = "";
+        blogMessage.classList.remove("delete-message");
+        window.location.reload();
+      }, 3000);
+    }
+  } catch (error) {
+    deleteBlogBtn.innerHTML = "Continue";
+    console.log(error);
   }
-  blogs.splice(index, 1)[0];
-
-  localStorage.setItem("blogs", JSON.stringify(blogs));
-
-  //current opened modal
-  const currentOpenedModal = document.getElementById(
-    `delete-blog-modal-${blogId}`
-  );
-  currentOpenedModal.style.display = "none";
-
-  const blogMessage = document.getElementById("blog-message");
-  blogMessage.innerHTML = "blog deleted successfully";
-  blogMessage.classList.add("delete-message");
-
-  setTimeout(() => {
-    blogMessage.innerHTML = "";
-    blogMessage.classList.remove("delete-message");
-    window.location.reload();
-  }, 3000);
 };
 
 //delete blog comment
-const deleteBlogComment = (blogId, commentId) => {
-  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
-  const blogIndex = blogs.findIndex((blog) => blog.id === blogId);
+const deleteBlogComment = async (commentId) => {
+  const token = localStorage.getItem("dauth");
+  const url = `https://portfolioapi-production-ec62.up.railway.app/api/comments/${commentId}`;
 
-  if (blogIndex === -1) {
-    alert("Blog not found");
-    return;
-  }
+  const options = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  };
 
-  const commentIndex = blogs[blogIndex].comments.findIndex(
-    (comment) => comment.id === commentId
+  const deleteBlogCommentBtn = document.getElementById(
+    `continue-delete-blog-comment-${commentId}`
   );
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader");
+  deleteBlogCommentBtn.innerHTML = "";
+  deleteBlogCommentBtn.appendChild(isLoading);
 
-  if (commentIndex === -1) {
-    alert("Comment not found");
-    return;
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      deleteBlogCommentBtn.innerHTML = "Continue";
+      const resError = await response.json();
+      showToaster(resError.error, 5000);
+    }
+
+    if (response.ok) {
+      deleteBlogCommentBtn.innerHTML = "Continue";
+      const data = await response.json();
+      //current opened modal
+      const currentOpenedModal = document.getElementById(
+        `delete-blog-comment-modal-${commentId}`
+      );
+      currentOpenedModal.style.display = "none";
+
+      const blogMessage = document.getElementById("blog-message");
+      blogMessage.innerHTML = data.message;
+      blogMessage.classList.add("added-message");
+
+      setTimeout(() => {
+        blogMessage.innerHTML = "";
+        blogMessage.classList.remove("added-message");
+        window.location.reload();
+      }, 3000);
+    }
+  } catch (error) {
+    deleteBlogCommentBtn.innerHTML = "Continue";
+    console.log(error);
   }
-
-  blogs[blogIndex].comments.splice(commentIndex, 1)[0];
-
-  localStorage.setItem("blogs", JSON.stringify(blogs));
-
-  //current opened modal
-  const currentOpenedModal = document.getElementById(
-    `delete-blog-comment-modal-${commentId}`
-  );
-  currentOpenedModal.style.display = "none";
-
-  const blogMessage = document.getElementById("blog-message");
-  blogMessage.innerHTML = "comment deleted successfully";
-  blogMessage.classList.add("added-message");
-
-  setTimeout(() => {
-    blogMessage.innerHTML = "";
-    blogMessage.classList.remove("added-message");
-    window.location.reload();
-  }, 3000);
 };
 
-const setLikeCommentsandViewNumbers = () => {
+const setLikeCommentsandViewNumbers = async () => {
   const posts = document.getElementById("blogs-numbers");
   const comments = document.getElementById("comments-number");
   const likes = document.getElementById("likes-number");
 
-  // get blogs from local storage
-  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+  //isLoading
+  const isLoadingPosts = document.createElement("div");
+  isLoadingPosts.classList.add("loader-1");
 
+  const isLoadingComments = document.createElement("div");
+  isLoadingComments.classList.add("loader-1");
+
+  const isLoadingLikes = document.createElement("div");
+  isLoadingLikes.classList.add("loader-1");
+
+  //posts
+  posts.innerHTML = "";
+  posts.appendChild(isLoadingPosts);
+  //comments
+  comments.innerHTML = "";
+  comments.appendChild(isLoadingComments);
+  //likes
+  likes.innerHTML = "";
+  likes.appendChild(isLoadingLikes);
+
+  // get blogs from api
+  const res = await fetch(
+    "https://portfolioapi-production-ec62.up.railway.app/api/blogs"
+  );
+  const data = await res.json();
+  let blogs = data.blogsWithComments;
+
+  posts.removeChild(isLoadingPosts);
   posts.innerHTML = blogs.length;
 
   let allComments = [];
@@ -821,6 +953,7 @@ const setLikeCommentsandViewNumbers = () => {
     }
   }
 
+  comments.removeChild(isLoadingComments);
   comments.innerHTML = allComments.length;
 
   let likesNumber = 0;
@@ -828,23 +961,34 @@ const setLikeCommentsandViewNumbers = () => {
     likesNumber += blogs[i].likes;
   }
 
+  likes.removeChild(isLoadingLikes);
   likes.innerHTML = likesNumber;
 };
 setLikeCommentsandViewNumbers();
 
-const mostLikedPost = () => {
-  // get blogs from local storage
-  let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
+const mostLikedPost = async () => {
   const mostLikedDiv = document.querySelector(".recent-blogs-left");
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader-1");
+  mostLikedDiv.innerHTML = "";
+  mostLikedDiv.appendChild(isLoading);
+  // get blogs from api
+  const res = await fetch(
+    "https://portfolioapi-production-ec62.up.railway.app/api/blogs"
+  );
+  const data = await res.json();
+  let blogs = data.blogsWithComments;
 
   const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes);
 
   if (blogs.length === 0) {
+    mostLikedDiv.removeChild(isLoading);
     const noBlogs = document.createElement("p");
     noBlogs.classList.add("no-blog");
     noBlogs.textContent = "no blogs at the moment";
     mostLikedDiv.appendChild(noBlogs);
   } else {
+    mostLikedDiv.removeChild(isLoading);
     for (let i = 0; i < sortedBlogs.length; i++) {
       const likesBlogCard = document.createElement("div");
       likesBlogCard.classList.add("recent-blog-left-card");
@@ -862,3 +1006,73 @@ const mostLikedPost = () => {
   }
 };
 mostLikedPost();
+
+function showToaster(message, seconds = 3000) {
+  const toastP = document.getElementById("dashboard-toast");
+  toastP.innerText = message;
+  toastP.classList.add("dashboard-toast");
+
+  setTimeout(() => {
+    toastP.innerText = "";
+    toastP.classList.remove("dashboard-toast");
+  }, seconds);
+}
+
+const logoutButton = document.getElementById("logout");
+const logoutHandler = async () => {
+  const data = {
+    token: localStorage.getItem("dref"),
+  };
+  const url =
+    "https://portfolioapi-production-ec62.up.railway.app/api/users/logout";
+
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  };
+
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader-1");
+  logoutButton.innerHTML = "";
+  logoutButton.appendChild(isLoading);
+
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      logoutButton.innerHTML = "Logout";
+      const resError = await response.json();
+      localStorage.removeItem("dauth");
+      localStorage.removeItem("dref");
+      window.location.href = "/login/login.html";
+    }
+
+    if (response.ok) {
+      logoutButton.innerHTML = "Logout";
+      const data = await response.json();
+      showToaster(data.message);
+      localStorage.removeItem("dauth");
+      localStorage.removeItem("dref");
+      showToaster(data.message);
+      setTimeout(() => {
+        window.location.href = "/login/login.html";
+      }, 3000);
+    }
+  } catch (error) {
+    logoutButton.innerHTML = "Logout";
+    console.log(error);
+  }
+};
+
+logoutButton.addEventListener("click", logoutHandler);
+
+const checkUser = () => {
+  const token = localStorage.getItem("dauth");
+
+  if (!token) {
+    window.location.href = "/login/login.html";
+  }
+};
+checkUser();

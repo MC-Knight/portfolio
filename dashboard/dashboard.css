@@ -24,6 +24,66 @@ html {
 body {
   background-color: var(--white-color);
   overflow-x: hidden;
+  position: relative;
+}
+
+.loader {
+  width: 60px;
+  aspect-ratio: 4;
+  --_g: no-repeat radial-gradient(circle closest-side, #fff 90%, #0000);
+  background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
+  background-size: calc(100% / 3) 100%;
+  animation: l7 1s infinite linear;
+}
+@keyframes l7 {
+  33% {
+    background-size: calc(100% / 3) 0%, calc(100% / 3) 100%, calc(100% / 3) 100%;
+  }
+  50% {
+    background-size: calc(100% / 3) 100%, calc(100% / 3) 0%, calc(100% / 3) 100%;
+  }
+  66% {
+    background-size: calc(100% / 3) 100%, calc(100% / 3) 100%, calc(100% / 3) 0%;
+  }
+}
+
+.loader-1 {
+  width: 60px;
+  aspect-ratio: 4;
+  --_g: no-repeat radial-gradient(circle closest-side, #6c63ff 90%, #0000);
+  background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
+  background-size: calc(100% / 3) 100%;
+  animation: l8 1s infinite linear;
+}
+@keyframes l8 {
+  33% {
+    background-size: calc(100% / 3) 0%, calc(100% / 3) 100%, calc(100% / 3) 100%;
+  }
+  50% {
+    background-size: calc(100% / 3) 100%, calc(100% / 3) 0%, calc(100% / 3) 100%;
+  }
+  66% {
+    background-size: calc(100% / 3) 100%, calc(100% / 3) 100%, calc(100% / 3) 0%;
+  }
+}
+
+.dashboard-toast {
+  position: absolute;
+  width: 300px;
+  height: auto;
+  padding: 20px;
+  background: var(--white-color);
+  border-radius: 5px;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+  top: 0;
+  left: 50%;
+  transform: translate(-50%);
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  z-index: 50;
 }
 
 .container {
@@ -39,7 +99,7 @@ body {
 }
 
 .left-side {
-  width: 25%;
+  width: 20%;
   height: 100%;
   background: #33383c;
   display: flex;
@@ -90,14 +150,15 @@ body {
   font-size: 25px;
 }
 
-.right-side-welcome a {
-  text-decoration: none;
+.right-side-welcome button {
   color: var(--blue-color);
   font-weight: 400;
   font-size: 15px;
   border: 1px solid var(--blue-color);
+  background: var(--white-color);
+  cursor: pointer;
   border-radius: 5px;
-  padding: 5px;
+  padding: 5px 10px;
 }
 
 .right-side-cards {
@@ -510,6 +571,9 @@ body {
   background: var(--orange-color);
   color: var(--white-color);
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .comments-modal {
