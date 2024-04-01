@@ -147,6 +147,18 @@ const closeModal = document.querySelector(
 );
 closeModal.addEventListener("click", closeCommentModal);
 
+function showToaster(message, seconds = 3000) {
+  const toastP = document.getElementById("blog-toast");
+  toastP.innerText = message;
+  toastP.classList.add("blog-toast");
+
+  setTimeout(() => {
+    toastP.innerText = "";
+    toastP.classList.remove("blog-toast");
+  }, seconds);
+}
+
+const addCommentBtn = document.getElementById("add-comment-to-blog");
 const addcomment = async () => {
   const form = document.forms["add-comment-to-blog"];
 
@@ -164,25 +176,32 @@ const addcomment = async () => {
     blog: blogId,
   };
 
-  const res = await fetch(
-    "https://portfolioapi-production-ec62.up.railway.app/api/comments",
-    {
+  const url =
+    "https://portfolioapi-production-ec62.up.railway.app/api/comments";
+
+  const isLoading = document.createElement("div");
+  isLoading.classList.add("loader");
+  addCommentBtn.innerHTML = "";
+  addCommentBtn.appendChild(isLoading);
+
+  try {
+    const res = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(newComment),
-    }
-  );
+    });
 
-  if (res.ok) {
-    window.location.reload();
-  } else {
+    if (res.ok) {
+      addCommentBtn.innerHTML = "comment";
+      window.location.reload();
+    }
+  } catch (error) {
+    addCommentBtn.innerHTML = "comment";
     alert("oops something goes wrong");
   }
 };
-
-const addCommentBtn = document.getElementById("add-comment-to-blog");
 addCommentBtn.addEventListener("click", addcomment);
 
 // const updateViews = () => {
