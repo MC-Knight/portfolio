@@ -164,8 +164,14 @@ const loadLastTwoBlogs = async () => {
       <div class="blog-buttons">
         <div class="blog-like">
           <div>
-            ${isBlogVisited.isLiked ? likedHeart : notLikedHeart}
-            ${lastTwoBlogs[i].likes}
+          ${
+            isBlogVisited !== undefined
+              ? isBlogVisited.isLiked
+                ? likedHeart
+                : notLikedHeart
+              : notLikedHeart
+          }
+          ${lastTwoBlogs[i].likes}
           </div>
           <div>
             <svg
