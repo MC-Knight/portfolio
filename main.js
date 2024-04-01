@@ -123,6 +123,13 @@ const loadLastTwoBlogs = async () => {
     for (let i = 0; i < lastTwoBlogs.length; i++) {
       const blogCard = document.createElement("div");
       blogCard.classList.add("blog-content");
+
+      let VisitedBlogs = JSON.parse(localStorage.getItem("VisitedBlogs")) || [];
+      const currentBlogId = lastTwoBlogs[i]._id;
+      const isBlogVisited = VisitedBlogs.find(
+        (blog) => blog._id === currentBlogId
+      );
+
       const likedHeart = `
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M18 13.2222C19.49 11.6 21 9.65556 21 7.11111C21 5.49034 20.4205 3.93596 19.3891 2.7899C18.3576 1.64385 16.9587 1 15.5 1C13.74 1 12.5 1.55556 11 3.22222C9.5 1.55556 8.26 1 6.5 1C5.04131 1 3.64236 1.64385 2.61091 2.7899C1.57946 3.93596 1 5.49034 1 7.11111C1 9.66667 2.5 11.6111 4 13.2222L11 21L18 13.2222Z" fill="#F70000" stroke="#F70000" stroke-opacity="0.6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -157,7 +164,7 @@ const loadLastTwoBlogs = async () => {
       <div class="blog-buttons">
         <div class="blog-like">
           <div>
-            ${notLikedHeart}
+            ${isBlogVisited.isLiked ? likedHeart : notLikedHeart}
             ${lastTwoBlogs[i].likes}
           </div>
           <div>

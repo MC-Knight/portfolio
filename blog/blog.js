@@ -262,12 +262,36 @@ const likeBlog = async () => {
   console.log(visitedBlog);
 
   if (visitedBlog.isLiked) {
-    console.log("is liked blog");
-    visitedBlog.isLiked = false;
-    localStorage.setItem("VisitedBlogs", JSON.stringify(VisitedBlogs));
+    try {
+      const response = await fetch(
+        `https://portfolioapi-production-ec62.up.railway.app/api/blogs/unlike/${blogId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const resError = await response.json();
+        showToaster(resError.error, 5000);
+      }
+
+      if (response.ok) {
+        const data = await response.json();
+        showToaster(data.message, 3000);
+        visitedBlog.isLiked = false;
+        localStorage.setItem("VisitedBlogs", JSON.stringify(VisitedBlogs));
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
     return;
   } else {
-    console.log("like blog trying to like blog");
     try {
       const response = await fetch(
         `https://portfolioapi-production-ec62.up.railway.app/api/blogs/like/${blogId}`,
