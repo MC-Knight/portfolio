@@ -219,3 +219,7 @@ const loadLastTwoBlogs = async () => {
   }
 };
 loadLastTwoBlogs();
+
+if (!localStorage.getItem("VisitedBlogs")) {
+  localStorage.setItem("VisitedBlogs", JSON.stringify([]));
+}

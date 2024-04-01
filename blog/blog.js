@@ -108,6 +108,45 @@ const loadBlog = async () => {
     }
   };
   loadComment();
+
+  let VisitedBlogs = JSON.parse(localStorage.getItem("VisitedBlogs")) || [];
+  const currentBlogId = currentBlog._id;
+  const isBlogVisited = VisitedBlogs.find((blog) => blog._id === currentBlogId);
+
+  if (!isBlogVisited) {
+    VisitedBlogs.push({
+      _id: currentBlogId,
+      isViewed: true,
+      isLiked: false,
+    });
+    localStorage.setItem("VisitedBlogs", JSON.stringify(VisitedBlogs));
+    try {
+      const res = await fetch(
+        `https://portfolioapi-production-ec62.up.railway.app/api/blogs/view/${blogId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!res.ok) {
+        console.log("error updating views");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  if (isBlogVisited) {
+    if (isBlogVisited.isLiked) {
+      likes.innerHTML = `
+    <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M18 13.2222C19.49 11.6 21 9.65556 21 7.11111C21 5.49034 20.4205 3.93596 19.3891 2.7899C18.3576 1.64385 16.9587 1 15.5 1C13.74 1 12.5 1.55556 11 3.22222C9.5 1.55556 8.26 1 6.5 1C5.04131 1 3.64236 1.64385 2.61091 2.7899C1.57946 3.93596 1 5.49034 1 7.11111C1 9.66667 2.5 11.6111 4 13.2222L11 21L18 13.2222Z" fill="#F70000" stroke="#F70000" stroke-opacity="0.6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg> ${currentBlog.likes}`;
+    }
+  }
 };
 
 loadBlog();
@@ -185,7 +224,7 @@ const addcomment = async () => {
   addCommentBtn.appendChild(isLoading);
 
   try {
-    const res = await fetch(url, {
+    const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -193,45 +232,72 @@ const addcomment = async () => {
       body: JSON.stringify(newComment),
     });
 
-    if (res.ok) {
+    if (!response.ok) {
       addCommentBtn.innerHTML = "comment";
-      window.location.reload();
+      const resError = await response.json();
+      showToaster(resError.error, 5000);
+    }
+
+    if (response.ok) {
+      addCommentBtn.innerHTML = "comment";
+      const data = await response.json();
+      showToaster(data.message, 3000);
+      setTimeout(() => {
+        window.location.reload();
+      }, 3000);
     }
   } catch (error) {
     addCommentBtn.innerHTML = "comment";
-    alert("oops something goes wrong");
+    showToaster("oops something goes wrong", 3000);
   }
 };
 addCommentBtn.addEventListener("click", addcomment);
 
-// const updateViews = () => {
-//   if (!currentBlog.isViewed) {
-//     let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
-//     const editedBlog = blogs.find((b) => b.id == blogId);
-//     editedBlog.views += 1;
-//     editedBlog.isViewed = true;
-//     localStorage.setItem("blogs", JSON.stringify(blogs));
-//   }
-// };
-// updateViews();
+const likeBtn = document.getElementById("like-modal");
+const likeBlog = async () => {
+  console.log("like blog");
+  const VisitedBlogs = JSON.parse(localStorage.getItem("VisitedBlogs")) || [];
 
-// const likeBlog = () => {
-//   if (!currentBlog.isLiked) {
-//     let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
-//     const editedBlog = blogs.find((b) => b.id == blogId);
-//     editedBlog.likes += 1;
-//     editedBlog.isLiked = true;
-//     localStorage.setItem("blogs", JSON.stringify(blogs));
-//     window.location.reload();
-//   } else {
-//     let blogs = JSON.parse(localStorage.getItem("blogs")) || [];
-//     const editedBlog = blogs.find((b) => b.id == blogId);
-//     editedBlog.likes -= 1;
-//     editedBlog.isLiked = false;
-//     localStorage.setItem("blogs", JSON.stringify(blogs));
-//     window.location.reload();
-//   }
-// };
+  const visitedBlog = VisitedBlogs.find((blog) => blog._id === blogId);
+  console.log(visitedBlog);
 
-// const likeBtn = document.getElementById("like-modal");
-// likeBtn.addEventListener("click", likeBlog);
+  if (visitedBlog.isLiked) {
+    console.log("is liked blog");
+    visitedBlog.isLiked = false;
+    localStorage.setItem("VisitedBlogs", JSON.stringify(VisitedBlogs));
+    return;
+  } else {
+    console.log("like blog trying to like blog");
+    try {
+      const response = await fetch(
+        `https://portfolioapi-production-ec62.up.railway.app/api/blogs/like/${blogId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (!response.ok) {
+        const resError = await response.json();
+        showToaster(resError.error, 5000);
+      }
+
+      if (response.ok) {
+        const data = await response.json();
+        showToaster(data.message, 3000);
+        visitedBlog.isLiked = true;
+        localStorage.setItem("VisitedBlogs", JSON.stringify(VisitedBlogs));
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    return;
+  }
+};
+
+likeBtn.addEventListener("click", likeBlog);
