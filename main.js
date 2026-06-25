@@ -1,75 +1,127 @@
-// onscroll navigation bar
+// ============================================================
+// NAVBAR — scroll effect
+// ============================================================
+const navbar = document.getElementById("navbar");
 window.addEventListener("scroll", () => {
-  const navbar = document.getElementById("onscroll-navbar");
-  if (navbar) {
-    if (window.innerWidth >= 956) {
-      if (window.scrollY > 40) {
-        navbar.style.display = "flex";
-      } else {
-        navbar.style.display = "none";
-      }
-    } else {
-      navbar.style.display = "none";
-    }
+  if (window.scrollY > 50) {
+    navbar.classList.add("scrolled");
+  } else {
+    navbar.classList.remove("scrolled");
   }
 });
 
-//age span
-const span = document.getElementById("ageSpan");
-const currentYear = new Date().getFullYear();
-const birthYear = 2000;
-const age = currentYear - birthYear;
-span.textContent = age;
+// ============================================================
+// MOBILE NAV — open / close
+// ============================================================
+const navOpen = document.getElementById("nav-open");
+const navClose = document.getElementById("nav-close");
+const mobileNav = document.getElementById("mobile-nav");
+const navOverlay = document.getElementById("nav-overlay");
 
-//footer yera
-const yearSpan = document.getElementById("footer-year");
-yearSpan.textContent = currentYear;
+function openMobileNav() {
+  mobileNav.classList.add("open");
+  navOverlay.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
 
+function closeMobileNav() {
+  mobileNav.classList.remove("open");
+  navOverlay.classList.remove("open");
+  document.body.style.overflow = "";
+}
+
+navOpen.addEventListener("click", openMobileNav);
+navClose.addEventListener("click", closeMobileNav);
+navOverlay.addEventListener("click", closeMobileNav);
+
+document.querySelectorAll(".mobile-nav a").forEach((link) => {
+  link.addEventListener("click", closeMobileNav);
+});
+
+// ============================================================
+// AGE CALCULATION
+// ============================================================
+const ageSpan = document.getElementById("ageSpan");
+if (ageSpan) {
+  ageSpan.textContent = new Date().getFullYear() - 2000;
+}
+
+// ============================================================
+// FOOTER YEAR
+// ============================================================
+const footerYear = document.getElementById("footer-year");
+if (footerYear) {
+  footerYear.textContent = new Date().getFullYear();
+}
+
+// ============================================================
+// CONTACT FORM — Google Sheets
+// ============================================================
 const scriptURL =
   "https://script.google.com/macros/s/AKfycbz00IMAUfMt0LyM3OJ2dOxJeNeWY9XgKG7XHvJ45to9tDTiq2FgIi5pzvvlaKNM2gCSDg/exec";
 const form = document.forms["submit-to-google-sheet"];
 const msg = document.getElementById("msg");
 
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  if (form["name"].value == null || form["name"].value == "") {
-    alert("please enter your name.");
-    return;
-  }
+if (form) {
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    fetch(scriptURL, { method: "POST", body: new FormData(form) })
+      .then(() => {
+        msg.textContent = "Message sent successfully";
+        form.reset();
+        setTimeout(() => {
+          msg.textContent = "";
+        }, 4000);
+      })
+      .catch(() => {
+        msg.textContent = "Something went wrong. Please try again.";
+        setTimeout(() => {
+          msg.textContent = "";
+        }, 4000);
+      });
+  });
+}
 
-  if (form["email"].value == null || form["email"].value == "") {
-    alert("please enter your email.");
-    return;
-  }
+// ============================================================
+// ACTIVE NAV LINK on scroll (Intersection Observer)
+// ============================================================
+const sections = document.querySelectorAll("section[id]");
+const navLinks = document.querySelectorAll(".navbar-links a");
 
-  if (form["Message"].value == null || form["Message"].value == "") {
-    alert("please enter your Message.");
-    return;
-  }
-  fetch(scriptURL, { method: "POST", body: new FormData(form) })
-    .then((response) => {
-      msg.innerHTML = "Message sent successfully";
-      setTimeout(() => {
-        msg.innerHTML = "";
-      }, 3000);
-      form.reset();
-      console.log(response);
-    })
-    .catch((error) => console.error("Error!", error.message));
+const sectionObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        navLinks.forEach((link) => link.classList.remove("active"));
+        const active = document.querySelector(
+          `.navbar-links a[href="#${entry.target.id}"]`,
+        );
+        if (active) active.classList.add("active");
+      }
+    });
+  },
+  { threshold: 0.4 },
+);
+
+sections.forEach((section) => sectionObserver.observe(section));
+
+// ============================================================
+// 3D TILT EFFECT — mouse-tracked card tilt
+// ============================================================
+document.querySelectorAll(".tilt-card").forEach((card) => {
+  card.addEventListener("mousemove", (e) => {
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const cx = rect.width / 2;
+    const cy = rect.height / 2;
+    const rotX = ((y - cy) / cy) * -6;
+    const rotY = ((x - cx) / cx) * 6;
+    card.style.transform = `perspective(900px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(10px)`;
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.style.transform =
+      "perspective(900px) rotateX(0deg) rotateY(0deg) translateZ(0px)";
+  });
 });
-
-//open and close menu in small screen
-const closeBtn = document.getElementById("close");
-const openBtn = document.getElementById("open");
-const menu = document.getElementById("small-screens");
-
-openBtn.addEventListener("click", openMenu);
-closeBtn.addEventListener("click", closeMenu);
-
-function openMenu() {
-  menu.style.right = "0";
-}
-
-function closeMenu() {
-  menu.style.right = "-200px";
-}

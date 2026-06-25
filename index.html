@@ -1,298 +1,290 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Byishimo Teto Joseph</title>
-
+    <title>Joseph BT — Software Developer</title>
     <link
       rel="icon"
       type="image/png"
       sizes="32x32"
       href="images/favicon-32x32.png"
     />
-
-    <!-- lucide icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
-
-    <!-- AOS CSS -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-
-    <!-- AOS JS -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
-    <!-- main css -->
     <link rel="stylesheet" href="main.css" />
   </head>
   <body>
-    <!-- forsmall screens -->
-    <nav class="small-screens" id="small-screens">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="lucide lucide-x"
-        id="close"
-      >
-        <path d="M18 6 6 18" />
-        <path d="m6 6 12 12" />
-      </svg>
+    <!-- Ambient background -->
+    <div class="bg-orb orb-1"></div>
+    <div class="bg-orb orb-2"></div>
+    <div class="bg-orb orb-3"></div>
+    <div class="bg-grid"></div>
 
-      <a href="#home">Home</a>
-      <a href="#about-me">About Me</a>
-      <a href="#skills">Skills</a>
-      <a href="#contact-me">Contact Me</a>
-      <a href="./login/login.html">Login</a>
-    </nav>
-    <!-- forsmall screens -->
+    <!-- Mobile nav overlay -->
+    <div class="nav-overlay" id="nav-overlay"></div>
 
-    <!-- onscroll navbar start -->
-    <div class="onscroll-navbar" id="onscroll-navbar">
-      <div class="onscroll-navbar-left">
-        <h1><span>Joseph</span> BT</h1>
-      </div>
-      <div class="onscroll-navbar-right">
-        <nav>
-          <a href="#home">Home</a>
-          <a href="#about-me">About Me</a>
-          <a href="#skills">Skills</a>
-          <a href="#contact-me">Contact Me</a>
-        </nav>
-      </div>
-    </div>
-    <!-- onscroll navbar end -->
-
-    <!-- homeDiv start -->
-    <div class="container" id="home">
-      <div class="container-right" data-aos="fade-right">
-        <h1><span>Joseph</span> BT</h1>
+    <!-- Mobile nav panel -->
+    <nav class="mobile-nav" id="mobile-nav">
+      <button class="mobile-nav-close" id="nav-close" aria-label="Close menu">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          width="24"
-          height="24"
+          width="20"
+          height="20"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
           stroke-width="2"
           stroke-linecap="round"
           stroke-linejoin="round"
-          class="lucide lucide-menu"
-          id="open"
         >
-          <line x1="4" x2="20" y1="12" y2="12" />
+          <path d="M18 6 6 18" />
+          <path d="m6 6 12 12" />
+        </svg>
+      </button>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#career">Career</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <!-- Navbar -->
+    <header class="navbar" id="navbar">
+      <div class="navbar-brand"><span>Joseph</span> BT</div>
+      <nav class="navbar-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#career">Career</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button class="hamburger" id="nav-open" aria-label="Open menu">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
           <line x1="4" x2="20" y1="6" y2="6" />
+          <line x1="4" x2="20" y1="12" y2="12" />
           <line x1="4" x2="20" y1="18" y2="18" />
         </svg>
+      </button>
+    </header>
 
-        <div class="profile">
-          <div class="inner-white">
-            <img src="images/profile.png" alt="" />
-          </div>
-        </div>
-      </div>
-      <div class="container-left" data-aos="fade-left">
-        <nav>
-          <a href="#home">Home</a>
-          <a href="#about-me">About Me</a>
-          <a href="#skills">Skills</a>
-          <a href="#contact-me">Contact Me</a>
-        </nav>
-
-        <div class="profile-details">
-          <h2>Hi, I’m Joseph</h2>
-          <h3>Software Developer</h3>
-          <p>based in Kigali, Rwanda</p>
-
-          <div class="socials">
-            <div>
-              <a href="http://github.com/MC-Knight" target="_blank">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-github"
-                >
-                  <path
-                    d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
-                  />
-                  <path d="M9 18c-4.51 2-5-2-7-2" />
-                </svg>
-              </a>
-            </div>
-
-            <div>
-              <a
-                href="https://www.linkedin.com/in/byishimo-teto-joseph-29642a17a"
-                target="_blank"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-linkedin"
-                >
-                  <path
-                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
-                  />
-                  <rect width="4" height="12" x="2" y="9" />
-                  <circle cx="4" cy="4" r="2" />
-                </svg>
-              </a>
-            </div>
-
-            <div>
-              <a href="https://www.instagram.com/jama_w_jah" target="_blank">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="lucide lucide-instagram"
-                >
-                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
-                </svg>
-              </a>
-            </div>
-          </div>
-
-          <div class="download">
-            <a href="files/byishimoCV.pdf" download="byishimoCV.pdf"
-              >Download CV</a
-            >
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- homeDiv end -->
-
-    <!-- aboutMeDiv start -->
-    <div class="container" id="about-me">
-      <div class="container-right right-small">
-        <h1><span>ABOUT ME</span></h1>
-      </div>
-      <div class="container-left left-small">
-        <div class="aboutme-head" data-aos="fade-left">
-          <h1>I'm <span>Joseph Byishimo Teto,</span> a Web Developer</h1>
-        </div>
-
-        <div class="aboutme-content" data-aos="fade-left">
-          <p>
-            Flexible software developer and graphic designer ready to take on
-            varied and diverse writing projects. Equally skilled at delivering
-            technical reports and comprehensive, visceral, and substantial final
-            projects.
-          </p>
-          <p>
-            Known for fulfilling duties typically assigned to several developer.
-            Keen to take ownership of client’s creative identity and user
-            outreach efforts, and broadening client’s bases by enhancing public
-            appeal through visually-stimulating and interactive environments.
-          </p>
-        </div>
-
-        <div class="aboutme-details" data-aos="fade-left">
-          <div>
-            <div class="aboutme-details-content">
-              <p>Name: <span> Byishimo Teto Joseph</span></p>
-            </div>
-
-            <div class="aboutme-details-content">
-              <p>
-                Email:
-                <a href="mailto:tetobobo1@gmail.com">tetobobo1@gmail.com</a>
-              </p>
-            </div>
-          </div>
-
-          <div>
-            <div class="aboutme-details-content">
-              <p>Age: <span id="ageSpan"></span></p>
-            </div>
-
-            <div class="aboutme-details-content">
-              <p>From: <span> Kigali, Rwanda</span></p>
+    <!-- ======== HERO ======== -->
+    <section id="home" class="hero">
+      <div class="hero-inner" data-aos="fade-up" data-aos-duration="900">
+        <div class="hero-profile-wrap">
+          <div class="hero-profile-ring">
+            <div class="hero-profile-img">
+              <img src="images/profile.png" alt="Joseph BT" />
             </div>
           </div>
         </div>
-
-        <div class="aboutme-hireme" data-aos="fade-left">
-          <a href="#contact-me">Hire me</a>
-        </div>
-      </div>
-    </div>
-    <!-- aboutMeDiv end -->
-
-    <!-- skillsDiv start -->
-    <div class="container" id="skills">
-      <div class="container-right right-small">
-        <h1><span>SKILLS</span></h1>
-      </div>
-      <div class="container-left left-small">
-        <div class="skills" data-aos="fade-left">
-          <h1>
+        <h1 class="hero-name">Hi, I'm <span>Joseph BT</span></h1>
+        <p class="hero-role">Software Developer</p>
+        <p class="hero-location">Based in Kigali, Rwanda</p>
+        <div class="hero-socials">
+          <a
+            href="http://github.com/MC-Knight"
+            target="_blank"
+            rel="noopener"
+            class="social-icon"
+            aria-label="GitHub"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="18"
+              height="18"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
               stroke-width="2"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="lucide lucide-globe"
+            >
+              <path
+                d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"
+              />
+              <path d="M9 18c-4.51 2-5-2-7-2" />
+            </svg>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/byishimo-teto-joseph-29642a17a"
+            target="_blank"
+            rel="noopener"
+            class="social-icon"
+            aria-label="LinkedIn"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+              />
+              <rect width="4" height="12" x="2" y="9" />
+              <circle cx="4" cy="4" r="2" />
+            </svg>
+          </a>
+          <a
+            href="https://www.instagram.com/jama_w_jah"
+            target="_blank"
+            rel="noopener"
+            class="social-icon"
+            aria-label="Instagram"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+              <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+            </svg>
+          </a>
+        </div>
+        <div class="hero-cta">
+          <a href="#contact" class="btn-primary">Hire Me</a>
+          <a
+            href="files/byishimoCV.pdf"
+            download="byishimoCV.pdf"
+            class="btn-outline"
+            >Download CV</a
+          >
+        </div>
+      </div>
+      <div class="hero-scroll-indicator">
+        <div class="scroll-dot"></div>
+      </div>
+    </section>
+
+    <!-- ======== ABOUT ======== -->
+    <section id="about" class="section">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">01</span>
+        <h2 class="section-title">About Me</h2>
+        <div class="section-line"></div>
+      </div>
+      <div
+        class="glass-card about-card"
+        data-aos="fade-up"
+        data-aos-delay="100"
+      >
+        <h3 class="about-heading">
+          I'm <span>Joseph Byishimo Teto,</span> a Web Developer
+        </h3>
+        <div class="about-body">
+          <p>
+            Flexible software developer and graphic designer ready to take on
+            varied and diverse projects. Equally skilled at delivering technical
+            reports and comprehensive final products.
+          </p>
+          <p>
+            Known for fulfilling duties typically assigned to several
+            developers. Keen to take ownership of client creative identity and
+            user outreach efforts, broadening client bases through visually
+            stimulating and interactive environments.
+          </p>
+        </div>
+        <div class="about-details">
+          <div class="about-detail-item">
+            <span class="detail-label">Name</span>
+            <span class="detail-value">Byishimo Teto Joseph</span>
+          </div>
+          <div class="about-detail-item">
+            <span class="detail-label">Age</span>
+            <span class="detail-value" id="ageSpan"></span>
+          </div>
+          <div class="about-detail-item">
+            <span class="detail-label">Email</span>
+            <a
+              class="detail-value detail-link"
+              href="mailto:tetobobo1@gmail.com"
+              >tetobobo1@gmail.com</a
+            >
+          </div>
+          <div class="about-detail-item">
+            <span class="detail-label">Location</span>
+            <span class="detail-value">Kigali, Rwanda</span>
+          </div>
+        </div>
+        <a href="#contact" class="btn-primary">Hire Me</a>
+      </div>
+    </section>
+
+    <!-- ======== SKILLS ======== -->
+    <section id="skills" class="section">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">02</span>
+        <h2 class="section-title">Skills</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="skills-grid">
+        <div
+          class="skill-card glass-card tilt-card"
+          data-aos="fade-up"
+          data-aos-delay="0"
+        >
+          <div class="skill-icon">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="26"
+              height="26"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             >
               <circle cx="12" cy="12" r="10" />
               <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
               <path d="M2 12h20" />
             </svg>
-
-            <span>Frontend Developer</span>
-          </h1>
-          <p>
-            I'm a Frontend developer experienced in HTML, CSS, and JavaScript
-            with also knowledge of Bootstrap, tailwind and React.
-          </p>
+          </div>
+          <h3>Frontend</h3>
+          <p>HTML, CSS, JavaScript, React, Tailwind CSS, Bootstrap</p>
         </div>
 
-        <div class="skills skills-right" data-aos="fade-left">
-          <h1>
+        <div
+          class="skill-card glass-card tilt-card"
+          data-aos="fade-up"
+          data-aos-delay="80"
+        >
+          <div class="skill-icon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="26"
+              height="26"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
+              stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="lucide lucide-braces"
             >
               <path
                 d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"
@@ -301,28 +293,27 @@
                 d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"
               />
             </svg>
-
-            <span>Backend Developer</span>
-          </h1>
-          <p>
-            I'm a Backend developer experienced in Django, Node.js and
-            Express.js with MySQL and PostgreSQL databases.
-          </p>
+          </div>
+          <h3>Backend</h3>
+          <p>Node.js, Express.js, Django, MySQL, PostgreSQL</p>
         </div>
 
-        <div class="skills" data-aos="fade-left">
-          <h1>
+        <div
+          class="skill-card glass-card tilt-card"
+          data-aos="fade-up"
+          data-aos-delay="160"
+        >
+          <div class="skill-icon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="26"
+              height="26"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
+              stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="lucide lucide-tablet-smartphone"
             >
               <rect width="10" height="14" x="3" y="8" rx="2" />
               <path
@@ -330,27 +321,27 @@
               />
               <path d="M8 18h.01" />
             </svg>
-            <span>Mobile Apps Developer </span>
-          </h1>
-          <p>
-            I also offer services in mobile app development with Flutter or
-            react native.
-          </p>
+          </div>
+          <h3>Mobile</h3>
+          <p>Flutter, React Native — cross-platform applications</p>
         </div>
 
-        <div class="skills skills-right" data-aos="fade-left">
-          <h1>
+        <div
+          class="skill-card glass-card tilt-card"
+          data-aos="fade-up"
+          data-aos-delay="240"
+        >
+          <div class="skill-icon">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
+              width="26"
+              height="26"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
+              stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
-              class="lucide lucide-pencil-ruler"
             >
               <path d="m15 5 4 4" />
               <path
@@ -365,84 +356,362 @@
                 d="m17 11 4.3 4.3c.94.94.94 2.46 0 3.4l-2.6 2.6c-.94.94-2.46.94-3.4 0L11 17"
               />
             </svg>
-
-            <span>UI/UX</span>
-          </h1>
-          <p>
-            I'm UI/UX designer experienced in working with Figma , designing
-            best mockups for websites and mobile application .
-          </p>
+          </div>
+          <h3>UI/UX Design</h3>
+          <p>Figma, wireframing, prototyping and interactive mockups</p>
         </div>
       </div>
-    </div>
-    <!-- skillsDiv end -->
+    </section>
 
-    <!-- contactusDiv start -->
-    <div class="container" id="contact-me">
-      <div class="container-right right-small">
-        <h1><span>CONTACT ME</span></h1>
+    <!-- ======== PROJECTS ======== -->
+    <section id="projects" class="section">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">03</span>
+        <h2 class="section-title">Projects</h2>
+        <div class="section-line"></div>
       </div>
-      <div class="container-left left-small">
-        <div class="contactme-head" data-aos="zoom-in-up">
-          <h1>SEND ME A NOTE</h1>
-        </div>
-
-        <div class="contactme-form" data-aos="zoom-in-up">
-          <form name="submit-to-google-sheet">
-            <div class="form-upper">
-              <div class="input-field">
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  placeholder="Name"
-                  required
-                />
-              </div>
-
-              <div class="input-field">
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  placeholder="Email"
-                  required
-                />
+      <div class="projects-grid">
+        <!-- Project 1 — Public -->
+        <div
+          class="project-card tilt-card"
+          data-aos="fade-up"
+          data-aos-delay="0"
+        >
+          <div
+            class="project-bg"
+            style="background-image: url(&quot;images/proj1.jpg&quot;)"
+          ></div>
+          <div class="project-glass">
+            <div class="project-body">
+              <h3 class="project-name">Portfolio Website</h3>
+              <div class="project-tech">
+                <span>HTML</span><span>CSS</span><span>JavaScript</span>
               </div>
             </div>
-            <textarea
-              id=""
-              name="Message"
-              placeholder="Tell me more about what you need....."
-              required
-            ></textarea>
+            <div class="project-footer">
+              <a
+                href="http://github.com/MC-Knight"
+                target="_blank"
+                rel="noopener"
+                class="project-btn"
+                >View Project</a
+              >
+            </div>
+          </div>
+        </div>
 
-            <input class="btn" type="submit" value="Send Message" />
-          </form>
-          <span id="msg"></span>
+        <!-- Project 2 — Private -->
+        <div
+          class="project-card tilt-card"
+          data-aos="fade-up"
+          data-aos-delay="80"
+        >
+          <div
+            class="project-bg"
+            style="background-image: url(&quot;images/proj2.jpg&quot;)"
+          ></div>
+          <div class="project-glass">
+            <div class="project-body">
+              <h3 class="project-name">E-Commerce Platform</h3>
+              <div class="project-tech">
+                <span>React</span><span>Node.js</span><span>PostgreSQL</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <button class="project-btn project-btn-private" disabled>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                Private
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 3 — Public -->
+        <div
+          class="project-card tilt-card"
+          data-aos="fade-up"
+          data-aos-delay="160"
+        >
+          <div
+            class="project-bg"
+            style="background-image: url(&quot;images/proj3.jpg&quot;)"
+          ></div>
+          <div class="project-glass">
+            <div class="project-body">
+              <h3 class="project-name">Mobile App</h3>
+              <div class="project-tech">
+                <span>Flutter</span><span>Firebase</span><span>Dart</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <a
+                href="http://github.com/MC-Knight"
+                target="_blank"
+                rel="noopener"
+                class="project-btn"
+                >View Project</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Project 4 — Private -->
+        <div
+          class="project-card tilt-card"
+          data-aos="fade-up"
+          data-aos-delay="240"
+        >
+          <div
+            class="project-bg"
+            style="background-image: url(&quot;images/proj4.jpg&quot;)"
+          ></div>
+          <div class="project-glass">
+            <div class="project-body">
+              <h3 class="project-name">REST API Service</h3>
+              <div class="project-tech">
+                <span>Django</span><span>PostgreSQL</span><span>Docker</span>
+              </div>
+            </div>
+            <div class="project-footer">
+              <button class="project-btn project-btn-private" disabled>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                </svg>
+                Private
+              </button>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <!-- contactusDiv end -->
+    </section>
 
-    <!-- footerDiv start -->
-    <div class="footer">
-      <div class="footer-left"></div>
-      <div class="footer-right">
-        <p>
-          &copy; <span id="footer-year"></span> | Joseph BT. All Rights Reserved
-        </p>
+    <!-- ======== CAREER ======== -->
+    <section id="career" class="section">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">04</span>
+        <h2 class="section-title">Career</h2>
+        <div class="section-line"></div>
       </div>
-    </div>
-    <!-- footerDiv end -->
-    <script></script>
 
-    <!-- main script -->
+      <div class="timeline">
+        <div class="timeline-entry" data-aos="fade-right">
+          <div class="timeline-card glass-card">
+            <span class="timeline-period">2025 — Present</span>
+            <h3 class="timeline-role">Quality Assurance</h3>
+            <h4 class="timeline-company">B2TECH</h4>
+            <p class="timeline-desc">
+              At B2TECH, I contribute as a Quality Assurance tester, ensuring
+              that products meet the highest standards of functionality,
+              usability, and performance
+            </p>
+            <div class="timeline-tags">
+              <span>Testrail</span><span>Jira</span><span>Playwright</span>
+            </div>
+          </div>
+          <div class="timeline-mid"><div class="timeline-dot"></div></div>
+          <div class="timeline-empty"></div>
+        </div>
+
+        <div class="timeline-entry right" data-aos="fade-left">
+          <div class="timeline-empty"></div>
+          <div class="timeline-mid"><div class="timeline-dot"></div></div>
+          <div class="timeline-card glass-card">
+            <span class="timeline-period">2023 — 2026</span>
+            <h3 class="timeline-role">Software Engineer</h3>
+            <h4 class="timeline-company">Beno Holdings</h4>
+            <p class="timeline-desc">
+              I worked at Beno Holding, where I continue to expand my expertise
+              in full stack development. My role involves creating robust web
+              applications, developing APIs, and building mobile apps. I focus
+              on delivering high-quality, scalable solutions that meet the needs
+              of our clients and enhance user experience.
+            </p>
+            <div class="timeline-tags">
+              <span>Django</span><span>DRF</span><span>Python</span
+              ><span>React.js</span><span>Node.js</span><span>JavaScript</span
+              ><span>Figma</span><span>UI/UX</span><span>Typescript</span
+              ><span>Celery</span><span>Redis</span><span>Kafka</span
+              ><span>RabbitMQ</span><span>Docker</span><span>Kubernetes</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-entry" data-aos="fade-left">
+          <div class="timeline-empty"></div>
+          <div class="timeline-mid"><div class="timeline-dot"></div></div>
+          <div class="timeline-card glass-card">
+            <span class="timeline-period">Feb/2024 — Nov/2024</span>
+            <h3 class="timeline-role">Full Stack Developer</h3>
+            <h4 class="timeline-company">Andela</h4>
+            <p class="timeline-desc">
+              During my time at Andela, I significantly enhanced my skills in
+              full stack development, particularly with Node.js and React. The
+              program provided me with in-depth knowledge and hands-on
+              experience in building scalable and efficient web applications.
+            </p>
+            <div class="timeline-tags">
+              <span>React.js</span><span>Node.js</span><span>TypeScript</span
+              ><span>JavaScript</span><span>Figma</span><span>UI/UX</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-entry right" data-aos="fade-left">
+          <div class="timeline-empty"></div>
+          <div class="timeline-mid"><div class="timeline-dot"></div></div>
+          <div class="timeline-card glass-card">
+            <span class="timeline-period">Feb/2023 — May/2023</span>
+            <h3 class="timeline-role">Backend Developer</h3>
+            <h4 class="timeline-company">SOLVIT AFRICA</h4>
+            <p class="timeline-desc">
+              I attended the SOLVIT AFRICA training program for three months,
+              where I strengthened my skills in Django and DRF by building REST
+              APIs. This experience allowed me to deepen my understanding of
+              backend development and improve my ability to create efficient and
+              scalable web services.
+            </p>
+            <div class="timeline-tags">
+              <span>Django</span><span>DRF</span><span>Python</span
+              ><span>JavaScript</span><span>Figma</span><span>UI/UX</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-entry" data-aos="fade-left">
+          <div class="timeline-empty"></div>
+          <div class="timeline-mid"><div class="timeline-dot"></div></div>
+          <div class="timeline-card glass-card">
+            <span class="timeline-period">2022 — 2024</span>
+            <h3 class="timeline-role">Full Stack Developer (Freelance)</h3>
+            <h4 class="timeline-company">UHDSS</h4>
+            <p class="timeline-desc">
+              At UHDSS, I worked as a Full Stack Developer where I strengthened
+              my skills in Node.js and React.js. My responsibilities included
+              developing and maintaining web applications, ensuring seamless
+              integration between the front-end and back-end, and optimizing
+              performance for a better user experience
+            </p>
+            <div class="timeline-tags">
+              <span>React.js</span><span>Node.js</span><span>JavaScript</span
+              ><span>Figma</span><span>UI/UX</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-entry right" data-aos="fade-right">
+          <div class="timeline-mid"><div class="timeline-dot"></div></div>
+          <div class="timeline-empty"></div>
+          <div class="timeline-card glass-card">
+            <span class="timeline-period">2018 — 2024</span>
+            <h3 class="timeline-role">Information Technology Studies</h3>
+            <h4 class="timeline-company">University of Rwanda</h4>
+            <p class="timeline-desc">
+              Studied core Information Technology fundamentals including
+              algorithms, data structures, software engineering, and database
+              systems.
+            </p>
+            <div class="timeline-tags">
+              <span>Python</span><span>JavaScript</span><span>Dart</span
+              ><span>C#</span><span>Java</span><span>C++</span
+              ><span>TypeScript</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======== CONTACT ======== -->
+    <section id="contact" class="section">
+      <div class="section-header" data-aos="fade-up">
+        <span class="section-tag">05</span>
+        <h2 class="section-title">Contact Me</h2>
+        <div class="section-line"></div>
+      </div>
+      <div
+        class="glass-card contact-card"
+        data-aos="fade-up"
+        data-aos-delay="100"
+      >
+        <h3>Send Me a Note</h3>
+        <form name="submit-to-google-sheet" class="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Email"
+                required
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <textarea
+              id="message"
+              name="Message"
+              placeholder="Tell me more about what you need..."
+              required
+            ></textarea>
+          </div>
+          <input
+            type="submit"
+            class="btn-primary btn-submit"
+            value="Send Message"
+          />
+        </form>
+        <span id="msg"></span>
+      </div>
+    </section>
+
+    <!-- ======== FOOTER ======== -->
+    <footer class="footer">
+      <p>
+        &copy; <span id="footer-year"></span> Joseph BT — All Rights Reserved
+      </p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="main.js"></script>
-
-    <!-- aos animation init -->
     <script>
-      AOS.init();
+      AOS.init({
+        duration: 800,
+        easing: "ease-out-cubic",
+        once: true,
+        offset: 60,
+      });
     </script>
   </body>
 </html>
